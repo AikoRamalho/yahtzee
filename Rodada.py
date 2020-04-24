@@ -78,9 +78,13 @@ def Modifica_Dados_Rodada():
     rodadas[numero_rodada-1][numero_rodada]["dados_rodada"] = list(dados.values())[0]
     return 0
 
+#funcao auxiliar nos testes para deletar_rodadas
 def Deleta_Rodadas():
     rodadas.clear()
 
+#funcao que retorna a ultima rodada
+#retorna {1: None} caso nao hajam rodadsa
+#retorna {0: Rodada} caso haja rodada
 def Pega_Rodada():
     numero_rodada = len(rodadas)
     if(numero_rodada == 0):
