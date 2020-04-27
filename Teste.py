@@ -234,6 +234,8 @@ class Test(unittest.TestCase):
     #Inicio teste para criar rodada com sucesso        
     def testRodada_01_CriaRodada_Ok_Condicao_Retorno(self):
         print("Caso de Teste Rodada 01 - Criar dados com sucesso")
+        Deleta_Rodadas()
+        Destroi_Dados()
         retorno_esperado = Cria_Rodada()
         self.assertEqual(retorno_esperado,0)
     #####Fim teste para criar rodada com sucesso#####
@@ -242,6 +244,7 @@ class Test(unittest.TestCase):
     def testRodada_02_CriaRodada_Numero_Maximo_Atingido(self): 
         print("Caso de Teste Rodada 02 - O Numero de rodadas do jogo ja foi atingido")
         Deleta_Rodadas()
+        Destroi_Dados()
         for _ in range(27):
             Cria_Rodada()
         retorno_esperado = Cria_Rodada()
@@ -260,6 +263,7 @@ class Test(unittest.TestCase):
     def testRodada_03_Verifica_Tentativa_Ok_Condicao_Retorno(self): 
         print("Caso de Teste Rodada 03 - Ainda existe tentativa disponivel")
         Deleta_Rodadas()
+        Destroi_Dados()
         Cria_Rodada()
         retorno_esperado = Verifica_Tentativa()
         self.assertEqual(retorno_esperado,0)
@@ -269,9 +273,9 @@ class Test(unittest.TestCase):
     def testRodada_04_Verifica_Tentativa_Nao_Existem_Tentativas(self): 
         print("Caso de Teste Rodada 04 -Nao existe tentativa disponivel")
         Deleta_Rodadas()
+        Destroi_Dados()
         Cria_Rodada()
-        retorno = Atualiza_Tentativas(0)
-        print('retorno da atualiza tentativas: ', retorno)
+        Atualiza_Tentativas(0)
         retorno_esperado = Verifica_Tentativa()
         self.assertEqual(retorno_esperado,1)
     #####Fim teste para verificar tentativa caso nao existam tentativas disponiveis#####
@@ -351,6 +355,8 @@ class Test(unittest.TestCase):
     def testRodada_11_ModificaDadosRodada_Ok_Condicao_Retorno(self): 
         print("Caso de Teste Rodada 11 - Sucesso, objeto rodada atualizado")
         Deleta_Rodadas()
+        Destroi_Dados()
+        Cria_Dados()
         Cria_Rodada()
         retorno_esperado = Modifica_Dados_Rodada()
         Destroi_Dados()
@@ -462,7 +468,7 @@ class Test(unittest.TestCase):
         #3 - Id passado incorretamente
 
     #Inicio teste para verificar rodada com sucesso                     
-    def testJogo_03_VerificaRodada_Ok_Condicao_Retorno(self): 
+    def testJogo_03_VerificaRodadaJogo_Ok_Condicao_Retorno(self): 
         print("Caso de Teste Jogo 03 - Rodada Verificada corretamente")
         Atualiza_Tentativas(0)                
         retorno_esperado = Verifica_Rodada(1) #Considerando que o ID da rodada é um int que começa em 1
@@ -478,14 +484,14 @@ class Test(unittest.TestCase):
     #####Fim teste para verificar rodada caso restem tentativas#####
         
     #Inicio teste para verificar rodada caso o id passado nao corresponda aos ids disponiveis                   
-    def testJogo_05_VerificaRodada_Nao_Tem_O_ID(self): 
+    def testJogo_05_VerificaRodadaJogo_Nao_Tem_O_ID(self): 
         print("Caso de Teste Jogo 05 - Id nao correspondente com os ids disponiveis")   
         retorno_esperado = Verifica_Rodada(200) 
         self.assertEqual(retorno_esperado,2)
     #####Fim teste para verificar rodada caso o id passado nao corresponda aos ids disponiveis#####
 
     #Inicio teste para verificar rodada caso o id tenha sido passado incorretamente
-    def testJogo_06_VerificaRodada_ID_Passado_Incorretamente(self): 
+    def testJogo_06_VerificaRodadaJogo_ID_Passado_Incorretamente(self): 
         print("Caso de Teste Jogo 06 - ID passado incorretamente")   
         retorno_esperado = Verifica_Rodada("1") 
         self.assertEqual(retorno_esperado,3)
