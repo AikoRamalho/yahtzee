@@ -8,7 +8,8 @@ __all__ = ["Cria_Rodada", "Verifica_Tentativa", "Atualiza_Tentativas", "Modifica
 
 rodadas = []
 
-#funcao responsavel por criar o objeto rodada com 3 tentativas
+#funcao responsavel por criar o objeto rodada com 3 tentativas e dar append nele na lista
+#Parâmetros: None
 #retorna 0 no sucesso
 #retorna 1 caso numero de rodadas maxima tenha sido atingida
 #retorna 2 caso os dados da rodada anterior n tenham sido deletados
@@ -78,9 +79,16 @@ def Modifica_Dados_Rodada():
     rodadas[numero_rodada-1][numero_rodada]["dados_rodada"] = list(dados.values())[0]
     return 0
 
-#funcao auxiliar nos testes para deletar_rodadas
+#funcao que esvazia a lista de rodadas
+#Paramêtros: None
+#retorna 0 caso sucesso
+#retorna 1 caso a lista ja esteja vazia
 def Deleta_Rodadas():
+    qtdRodadas = len(rodadas)
+    if(qtdRodadas == 0):
+        return 1
     rodadas.clear()
+    return 0
 
 #funcao que retorna a ultima rodada
 #retorna {1: None} caso nao hajam rodadsa

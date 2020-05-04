@@ -11,9 +11,12 @@ dados = []
 #e congelado (booleano),que representa se o jogador escolheu por nao jogar
 #aquele dado especifico naquela arremesso.Exemplo de objeto Dado: {01: {congelado: False, face: 6}}.
 
-#Funcao que cria uma lista de cinco objetos dados.
+#Funcao que cria uma lista de cinco objetos dados. 
+#No caso de dessa função, cada objeto Dado criado terá seu valor “face” igual a zero, 
+#pois ainda não foi arremessado por algum jogador, seu valor “congelado”, portanto, será False
+#Parametro: NULL
 #retorna 0 caso de sucesso
-#retorna 1 caso ja exista dado criado
+#retorna 1 caso ja exista dado criado (tentativa de recriação)
 def Cria_Dados():
     qtdDados = len(dados)
     if(qtdDados == 5):
@@ -21,9 +24,11 @@ def Cria_Dados():
     for i in range(1, 6):
         dados.append({ i: {"face": 0, "congelado": False} })
     return 0
-#Muda o valor da chave �congelado� do objeto dado.
-#Parametro:ID (id do dado criado para identifica��o)
-#retorna 0 quando sucesso na mudan�a de estado
+
+
+#Muda o valor da chave congelado do objeto dado.
+#Parametro:ID (id do dado criado para identificacao)
+#retorna 0 quando sucesso na mudanca de estado
 #retorna 1 caso esse id nao tenha dado correspondente
 #retorna 2 caso o tipo de paramentro passado nao seja int
 #retorna 3 caso a lista de objetos Dado seja vazia(ainda nao criados)
@@ -37,9 +42,11 @@ def Muda_Status(id):
     state = dados[id-1][id]["congelado"]
     dados[id-1][id]["congelado"] = not state
     return 0
+
 # Funcao responsavel por verificar se todos os dados estao congelados
 #retorna True quando todos os dados estao congelados
 #retorna False quando algum dado nao esta mais congelado.
+#n eh funcao de acesso, somente eh uma funcao auxiliar para funcao Joga_Dados
 def verifica_dados_estao_todos_congelados():
     qtdDadosCongelados = 0
     i = 1
@@ -50,7 +57,7 @@ def verifica_dados_estao_todos_congelados():
     if(qtdDadosCongelados == 5):
         return True
     return False
-# Funcao responssvel por atribuir, em cada dado com chave congelado de
+#Funcao responsavel por atribuir, em cada dado com chave congelado de
 #valor False, um novo valor randomico
 #retorna 0 quando sucesso
 #retorna 1 quando nao ha dados criados
@@ -69,6 +76,7 @@ def Jogar_Dados():
 
 #Funcao que retorna um dicionario contendo um codigo como chave
 #e uma lista de objetos dado
+#Parâmetros: None
 #codigo tem valor 0 quando sucesso
 #valor 1 caso nao hajam dados criados
 #valor 2 caso os dados ainda nao tenhma sido arremessados
@@ -81,8 +89,12 @@ def Mostra_Dados():
     return {0: dados}
 
 #funcao auxiliar para destruir os dados
+#Paramêtros: None
+#retorna 0 caso sucesso
+#retorna 1 caso a lista ja esteja vazia
 def Destroi_Dados():
-    qtdJogadores = len(dados)
-    if(qtdJogadores == 0):
+    qtdDados = len(dados)
+    if(qtdDados == 0):
         return 1
     dados.clear()
+    return 0
