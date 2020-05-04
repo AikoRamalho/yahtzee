@@ -1,0 +1,8 @@
+Para rodar as entregas da t2:
+
+Primeiro, tenha certeza que seu computador tem instalado python 3.8.
+
+Em segundo lugar, basta rodar o comando "py -3 teste.py" para rodar o arquivo do teste.
+
+Os arquivos Dados.py, Jogador.py, e Rodada.py que foram os três módulos definidos para esta entrega constam
+na raiz do projeto em ./yahtzee/
