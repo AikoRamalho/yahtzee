@@ -1,5 +1,5 @@
-#Versao 1.0.9
-#Ultima modificacao: Aiko Ramalho
+#Versao 1.0.10
+#Ultima modificacao: Carlos Ribeiro
 import random
 __all__ = ["Cria_Dados", "Muda_Status", "Mostra_Dados", "Destroi_Dados", "Jogar_Dados"]
 
@@ -12,11 +12,11 @@ dados = []
 #aquele dado especifico naquela arremesso.Exemplo de objeto Dado: {01: {congelado: False, face: 6}}.
 
 #Funcao que cria uma lista de cinco objetos dados. 
-#No caso de dessa função, cada objeto Dado criado terá seu valor “face” igual a zero, 
-#pois ainda não foi arremessado por algum jogador, seu valor “congelado”, portanto, será False
+#No caso de dessa funçao, cada objeto Dado criado tera seu valor “face” igual a zero, 
+#pois ainda nao foi arremessado por algum jogador, seu valor “congelado”, portanto, sera False
 #Parametro: NULL
 #retorna 0 caso de sucesso
-#retorna 1 caso ja exista dado criado (tentativa de recriação)
+#retorna 1 caso ja exista dado criado (tentativa de recriaçao)
 def Cria_Dados():
     qtdDados = len(dados)
     if(qtdDados == 5):
@@ -30,7 +30,7 @@ def Cria_Dados():
 #Parametro:ID (id do dado criado para identificacao)
 #retorna 0 quando sucesso na mudanca de estado
 #retorna 1 caso esse id nao tenha dado correspondente
-#retorna 2 caso o tipo de paramentro passado nao seja int
+#retorna 2 caso o tipo de parametro passado nao seja int
 #retorna 3 caso a lista de objetos Dado seja vazia(ainda nao criados)
 def Muda_Status(id):
     if(type(id) != type(0)):

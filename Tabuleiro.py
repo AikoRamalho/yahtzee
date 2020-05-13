@@ -1,4 +1,4 @@
-#Versao 1.1.0
+#Versao 1.1.3
 #Ultima modificacao: Carlos Ribeiro
 
 import Jogador

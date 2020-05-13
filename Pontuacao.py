@@ -63,9 +63,9 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
             cont6 = cont6 + 1
             pont = "Sixes"
 
-        #for x in listaPont:
-        #    if pont == x:
-        #        achado = 1
+        for x in listaPont:
+            if pont == x:
+                achado = 1
 
         #if cont1 == 3:
             
@@ -75,6 +75,9 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
             achado = 2
                 
         if achado == 0:
+            listaPont.append(pont)
+            listaAux.append(pont)
+        elif achado == 1:
             listaAux.append(pont)
         
         print(face)
@@ -84,6 +87,7 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
     if len(repetidos)> 0:
         for i in repetidos:
             if len(repetidos[i]) == 3:
+                
 
     
     
