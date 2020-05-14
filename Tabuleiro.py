@@ -76,7 +76,8 @@ def Destruir_Tab():
 def InserirPontuacao(pontuacao_atual, idJogadorAtual, tipoPontuacao):
     achado = 0
     achadoJogador = 0
-    listaJogadores = Jogador.jogadores
+    listaA = Jogador.Pega_Jogadores()
+    listaJogadores = listaA[0]
 
     if type(pontuacao_atual) != int:
         return 1
@@ -143,6 +144,20 @@ def Verifica_Vencedor():
         return {0: 1}
     elif linhaTotal[0]<linhaTotal[1]:
         return {0: 2}
+
+#Funcao que retorna o tabuleiro criado
+#Parametro: None
+#retorna {0: tabuleiro} caso de sucesso
+#retorna {1: []} caso nao haja tabuleiro
+def Pega_Tabuleiro():
+    qtdTab = len(tabuleiro)
+    if qtdTab == 0:
+        return {1: []}
+    return {0: tabuleiro}
+
+def Pega_PontuacaoAux():
+
+    return pontuacaoAux
 
 
 

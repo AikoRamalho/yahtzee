@@ -49,15 +49,15 @@ class Teste_ModuloJogador_DestroiJogadores(unittest.TestCase):
         #1 - Lista de jogadores ja esta vazia
 
     #destroi jogador ok -> retorno esperado: 0
-    def testJogador_01_DestroiJogadores_Ok_Condicao_Retorno(self):
-        print("Caso de Teste Jogador 01 - Jogadores destruidos com sucesso")
+    def testJogador_04_DestroiJogadores_Ok_Condicao_Retorno(self):
+        print("Caso de Teste Jogador 04 - Jogadores destruidos com sucesso")
         Cria_Novo_Jogador('aiko')
         retorno_esperado = Destroi_Jogadores()
         self.assertEqual(retorno_esperado, 0)
         
     #Lista de jogadores ja esta vazia -> retorno esperado: 1
-    def testJogador_01_DestroiJogadores_ListaJaVazia(self): 
-        print("Caso de Teste Jogador 02 - Lista Jogadores ja vazia")
+    def testJogador_05_DestroiJogadores_ListaJaVazia(self): 
+        print("Caso de Teste Jogador 05 - Lista Jogadores ja vazia")
         retorno_esperado = Destroi_Jogadores()
         self.assertEqual(retorno_esperado, 1)
 
@@ -69,8 +69,8 @@ class Teste_ModuloJogador_PegaJogador(unittest.TestCase):
         #{2: []} - Faltam dois jogadores para serem cadastrados
 
     #pega jogador caso sucesso
-    def testJogador_04_PegarJogadores_Ok_Condicao_Retorno(self): 
-        print("Caso de Teste Jogador 04 - Pegar jogadores com sucesso")
+    def testJogador_06_PegarJogadores_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Jogador 06 - Pegar jogadores com sucesso")
         Destroi_Jogadores()
         Cria_Novo_Jogador('aiko')
         Cria_Novo_Jogador('carol')
@@ -78,16 +78,16 @@ class Teste_ModuloJogador_PegaJogador(unittest.TestCase):
         self.assertEqual(retorno_esperado,{0:[{1: "aiko"}, {2: "carol"}]})
 
     #pega jogador caso falta um jogador p ser cadastrado
-    def testJogador_05_PegarJogadores_Falta_Um_Jogador(self): 
-        print("Caso de Teste Jogador 05 - Falta um jogador para ser cadastrado")
+    def testJogador_07_PegarJogadores_Falta_Um_Jogador(self): 
+        print("Caso de Teste Jogador 07 - Falta um jogador para ser cadastrado")
         Destroi_Jogadores()
         Cria_Novo_Jogador('eu')
         retorno_esperado = Pega_Jogadores()
         self.assertEqual(retorno_esperado,{1:[]})
         
     #pega jogador caso faltam dois jogadores p serem cadastrados
-    def testJogador_06_PegarJogadores_Faltam_Dois_Jogadores(self): 
-        print("Caso de Teste Jogador 06 - Faltam dois jogadores para serem cadastrados")
+    def testJogador_08_PegarJogadores_Faltam_Dois_Jogadores(self): 
+        print("Caso de Teste Jogador 08 - Faltam dois jogadores para serem cadastrados")
         Destroi_Jogadores()
         retorno_esperado = Pega_Jogadores()
         self.assertEqual(retorno_esperado,{2:[]})
@@ -121,15 +121,15 @@ class Teste_ModuloDados_Destroi_Dados(unittest.TestCase):
         #1 - Lista de dados ja esta vazia
 
     #destroi dados ok -> retorno esperado: 0
-    def testDados_01_DestroiDados_Ok_Condicao_Retorno(self):
-        print("Caso de Teste Dados 01 - Dados destruidos com sucesso")
+    def testDados_03_DestroiDados_Ok_Condicao_Retorno(self):
+        print("Caso de Teste Dados 03 - Dados destruidos com sucesso")
         Cria_Dados()
         retorno_esperado = Destroi_Dados()
         self.assertEqual(retorno_esperado, 0)
         
     #Lista de dados ja esta vazia -> retorno esperado: 1
-    def testDados_02_DestroiDados_ListaJaVazia(self): 
-        print("Caso de Teste dados 02 - Lista dados ja vazia")
+    def testDados_04_DestroiDados_ListaJaVazia(self): 
+        print("Caso de Teste dados 04 - Lista dados ja vazia")
         retorno_esperado = Destroi_Dados()
         self.assertEqual(retorno_esperado, 1)
 
@@ -143,32 +143,32 @@ class Teste_ModuloDados_MudaStatus(unittest.TestCase):
         #3 - Nao existem dados criados
 
     #muda status ok
-    def testDados_03_MudaStatus_Ok_Condicao_Retorno_1(self): 
-        print("Caso de Teste Dados 03 - Mudanca de estado do dado 1 com sucesso")
+    def testDados_05_MudaStatus_Ok_Condicao_Retorno_1(self): 
+        print("Caso de Teste Dados 05 - Mudanca de estado do dado 1 com sucesso")
         Destroi_Dados()
         Cria_Dados()
         retorno_esperado = Muda_Status(1)
         self.assertEqual(retorno_esperado,0)
         
     #muda status id passado incoerente (id > 6)
-    def testDados_04_MudaStatus_Nao_Existe_Dado(self): 
-        print("Caso de Teste Dados 04 - Esse ID nao tem dado correspondente")
+    def testDados_06_MudaStatus_Nao_Existe_Dado(self): 
+        print("Caso de Teste Dados 06 - Esse ID nao tem dado correspondente")
         Destroi_Dados()
         Cria_Dados()
         retorno_esperado = Muda_Status(7)
         self.assertEqual(retorno_esperado,1)
 
     #muda status type(id) != int
-    def testDados_05_MudaStatus_Nao_Ser_Int(self): 
-        print("Caso de Teste Dados 05 - Parametro passado nao corresponde ao tipo 'int'")
+    def testDados_07_MudaStatus_Nao_Ser_Int(self): 
+        print("Caso de Teste Dados 07 - Parametro passado nao corresponde ao tipo 'int'")
         Destroi_Dados()
         Cria_Dados()
         retorno_esperado = Muda_Status("1")
         self.assertEqual(retorno_esperado,2)
 
     #muda status nao existe dados criados
-    def testDados_06_MudaStatus_Lista_Vazia(self): 
-        print("Caso de Teste Dados 06 - Lista de dados nao existente")
+    def testDados_08_MudaStatus_Lista_Vazia(self): 
+        print("Caso de Teste Dados 08 - Lista de dados nao existente")
         Destroi_Dados()
         retorno_esperado = Muda_Status(1)
         self.assertEqual(retorno_esperado,3)
@@ -181,23 +181,23 @@ class Teste_ModuloDados_JogarDados(unittest.TestCase):
         #2 - Todos os dados estao congelados
 
     #jogar dados ok
-    def testDados_07_JogarDados_Ok_Condicao_Retorno(self): 
-        print("Caso de Teste Dados 07 - Jogada feita com sucesso")
+    def testDados_09_JogarDados_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Dados 09 - Jogada feita com sucesso")
         Destroi_Dados()
         Cria_Dados()
         retorno_esperado = Jogar_Dados()
         self.assertEqual(retorno_esperado,0)
 
     #jogar dados quando nao existem dados
-    def testDados_08_JogarDados_Dados_Nao_Existentes(self): 
-        print("Caso de Teste Dados 08 - Dados nao existentes")
+    def testDados_10_JogarDados_Dados_Nao_Existentes(self): 
+        print("Caso de Teste Dados 10 - Dados nao existentes")
         Destroi_Dados()
         retorno_esperado = Jogar_Dados()
         self.assertEqual(retorno_esperado,1)
 
     #todos os dados estao congelados
-    def testDados_09_JogarDados_Todos_Dados_Congelados(self): 
-        print("Caso de Teste Dados 09 - Todos os dados estao congelados")
+    def testDados_11_JogarDados_Todos_Dados_Congelados(self): 
+        print("Caso de Teste Dados 11 - Todos os dados estao congelados")
         Destroi_Dados()
         Cria_Dados()
         #Mudar o status de todos para ficarem "congelado": True
@@ -217,8 +217,8 @@ class Teste_ModuloDados_MostraDados(unittest.TestCase):
         #{2: []} - Os dados nao foram jogados (chave face com valor zero)
         
     #mostra dados caso sucesso
-    def testDados_10_MostraDados_Ok_Condicao_Retorno(self): 
-        print("Caso de Teste Dados 10 - Dados foram mostrados com sucesso")
+    def testDados_12_MostraDados_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Dados 12 - Dados foram mostrados com sucesso")
         Destroi_Dados()
         Cria_Dados()
         Jogar_Dados()
@@ -226,15 +226,15 @@ class Teste_ModuloDados_MostraDados(unittest.TestCase):
         self.assertEqual(list(retorno_esperado.keys())[0], 0)
 
     #mostradados nao existem dados criados
-    def testDados_11_MostraDados_Dados_Nao_Existentes(self): 
-        print("Caso de Teste Dados 11 - Dados nao existentes")
+    def testDados_13_MostraDados_Dados_Nao_Existentes(self): 
+        print("Caso de Teste Dados 13 - Dados nao existentes")
         Destroi_Dados()
         retorno_esperado = Mostra_Dados()
         self.assertEqual(retorno_esperado,{1: []})
 
     #mostradados os dados ainda nao foram jogados
-    def testDados_12_MostraDados_Dados_Nao_Jogados(self): 
-        print("Caso de Teste Dados 12 - Dados nao foram jogados")
+    def testDados_14_MostraDados_Dados_Nao_Jogados(self): 
+        print("Caso de Teste Dados 14 - Dados nao foram jogados")
         Destroi_Dados()
         Cria_Dados()
         retorno_esperado = Mostra_Dados()
@@ -272,15 +272,15 @@ class Teste_ModuloRodada_DeletaRodada(unittest.TestCase):
         #1 - Lista de rodada ja esta vazia
 
     #deleta rodada ok -> retorno esperado: 0
-    def testRodada_01_DeletaRodada_Ok_Condicao_Retorno(self):
-        print("Caso de Teste Rodada 01 - Rodadas esvaziadas com sucesso")
+    def testRodada_03_DeletaRodada_Ok_Condicao_Retorno(self):
+        print("Caso de Teste Rodada 03 - Rodadas esvaziadas com sucesso")
         Cria_Rodada()
         retorno_esperado = Deleta_Rodadas()
         self.assertEqual(retorno_esperado, 0)
         
     #Lista de rodada ja esta vazia -> retorno esperado: 1
-    def testRodada_02_DeletaRodada_ListaJaVazia(self): 
-        print("Caso de Teste rodada 02 - Lista Rodadas ja vazia")
+    def testRodada_04_DeletaRodada_ListaJaVazia(self): 
+        print("Caso de Teste rodada 04 - Lista Rodadas ja vazia")
         retorno_esperado = Deleta_Rodadas()
         self.assertEqual(retorno_esperado, 1)
 
@@ -292,8 +292,8 @@ class Teste_ModuloRodada_VerificaTentativa(unittest.TestCase):
         #2 - Nao existe rodada criada
         
     #Inicio teste para verificar tentativa com sucesso    
-    def testRodada_03_Verifica_Tentativa_Ok_Condicao_Retorno(self): 
-        print("Caso de Teste Rodada 03 - Ainda existe tentativa disponivel")
+    def testRodada_05_Verifica_Tentativa_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Rodada 05 - Ainda existe tentativa disponivel")
         Deleta_Rodadas()
         Destroi_Dados()
         Cria_Rodada()
@@ -301,8 +301,8 @@ class Teste_ModuloRodada_VerificaTentativa(unittest.TestCase):
         self.assertEqual(retorno_esperado,0)
         
     #Inicio teste para verificar tentativa caso nao existam tentativas disponiveis
-    def testRodada_04_Verifica_Tentativa_Nao_Existem_Tentativas(self): 
-        print("Caso de Teste Rodada 04 -Nao existe tentativa disponivel")
+    def testRodada_06_Verifica_Tentativa_Nao_Existem_Tentativas(self): 
+        print("Caso de Teste Rodada 06 -Nao existe tentativa disponivel")
         Deleta_Rodadas()
         Destroi_Dados()
         Cria_Rodada()
@@ -311,8 +311,8 @@ class Teste_ModuloRodada_VerificaTentativa(unittest.TestCase):
         self.assertEqual(retorno_esperado,1)
         
     #Inicio teste para verificar tentativa caso nao exista rodada criada
-    def testRodada_05_Verifica_Tentativa_Nao_Existe_Rodada(self): 
-        print("Caso de Teste Rodada 05 - Nao existe rodada criada")
+    def testRodada_07_Verifica_Tentativa_Nao_Existe_Rodada(self): 
+        print("Caso de Teste Rodada 07 - Nao existe rodada criada")
         Deleta_Rodadas()
         retorno_esperado = Verifica_Tentativa()
         self.assertEqual(retorno_esperado,2)
@@ -328,38 +328,38 @@ class Teste_ModuloRodada_Atualiza_Tentativa(unittest.TestCase):
         #4 - Nao existe rodada criada
         
     #Inicio teste para atualizar tentativa com sucesso
-    def testRodada_06_Atualiza_Tentativa_Ok_Condicao_Retorno(self): 
-        print("Caso de Teste Rodada 06 - Suceso, tentativa atualizada")
+    def testRodada_08_Atualiza_Tentativa_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Rodada 08 - Suceso, tentativa atualizada")
         Deleta_Rodadas()
         Cria_Rodada()
         retorno_esperado = Atualiza_Tentativas(2)
         self.assertEqual(retorno_esperado,0)
 
     #Inicio teste para atualizar tentativa caso o numero seja inconsistente        
-    def testRodada_07_Atualiza_Tentativa_Numero_Inconsistente_Condicao_Retorno(self): 
-        print("Caso de Teste Rodada 07 - Numero inconsistente")
+    def testRodada_09_Atualiza_Tentativa_Numero_Inconsistente_Condicao_Retorno(self): 
+        print("Caso de Teste Rodada 09 - Numero inconsistente")
         Deleta_Rodadas()
         Cria_Rodada()
         retorno_esperado = Atualiza_Tentativas(3)
         self.assertEqual(retorno_esperado,1)
 
     #Inicio teste para atualizar tentativa caso o numero de tentativas do parametro seja diferente de tentativas -1 do ultimo objeto    
-    def testRodada_08_Atualiza_Tentativa_NTentativas_Diferente(self): 
-        print("Caso de Teste Rodada 08 - O numero de tentativas no paramentro eh diferente de tentativas -1 do ultimo objeto")
+    def testRodada_10_Atualiza_Tentativa_NTentativas_Diferente(self): 
+        print("Caso de Teste Rodada 10 - O numero de tentativas no paramentro eh diferente de tentativas -1 do ultimo objeto")
         Deleta_Rodadas()
         retorno_esperado = Atualiza_Tentativas(10)
         self.assertEqual(retorno_esperado,2)
 
     #Inicio teste para atualizar tentativa caso o parametro nao seja aceito
-    def testRodada_09_Atualiza_Tentativa_Parametro_NaoAceito(self): 
-        print("Caso de Teste Rodada 09 - Tentativa no parametro nao condiz com o range aceito")
+    def testRodada_11_Atualiza_Tentativa_Parametro_NaoAceito(self): 
+        print("Caso de Teste Rodada 11 - Tentativa no parametro nao condiz com o range aceito")
         Deleta_Rodadas()
         retorno_esperado = Atualiza_Tentativas("1")
         self.assertEqual(retorno_esperado,3)
 
     #Inicio teste para atualizar tentativa caso nao exista rodada criada
-    def testRodada_10_Atualiza_Tentativa_Nao_Existe_RodadaCriada(self): 
-        print("Caso de Teste Rodada 10 -Nao existe rodada criada")
+    def testRodada_12_Atualiza_Tentativa_Nao_Existe_RodadaCriada(self): 
+        print("Caso de Teste Rodada 12 -Nao existe rodada criada")
         Deleta_Rodadas()
         retorno_esperado = Atualiza_Tentativas(2)
         self.assertEqual(retorno_esperado,4)
@@ -374,8 +374,8 @@ class Teste_ModuloRodada_ModificaDadosRodada(unittest.TestCase):
         #4 - Nao existe rodada criada
 
     #Inicio teste para modificar a rodada com sucesso    
-    def testRodada_11_ModificaDadosRodada_Ok_Condicao_Retorno(self): 
-        print("Caso de Teste Rodada 11 - Sucesso, objeto rodada atualizado")
+    def testRodada_13_ModificaDadosRodada_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Rodada 13 - Sucesso, objeto rodada atualizado")
         Deleta_Rodadas()
         Destroi_Dados()
         Cria_Dados()
@@ -385,8 +385,8 @@ class Teste_ModuloRodada_ModificaDadosRodada(unittest.TestCase):
         self.assertEqual(retorno_esperado,0)
 
     #Inicio teste para modificar a rodada caso nao tenham tentativas sobrando
-    def testRodada_12_ModificaDadosRodada_Sem_Tentativas_Sobrando(self): 
-        print("Caso de Teste Rodada 12 -Nao tem tentivas sobrando")
+    def testRodada_14_ModificaDadosRodada_Sem_Tentativas_Sobrando(self): 
+        print("Caso de Teste Rodada 14 -Nao tem tentivas sobrando")
         Deleta_Rodadas()
         Cria_Rodada()
         Atualiza_Tentativas(0)
@@ -395,8 +395,8 @@ class Teste_ModuloRodada_ModificaDadosRodada(unittest.TestCase):
         self.assertEqual(retorno_esperado,1)
 
     #Inicio teste para modificar a rodada caso os dados estejam congelados    
-    def testRodada_13_ModificaDadosRodada_Dados_Congelados(self): 
-        print("Caso de Teste Rodada 13 -Dados estao Congelados")
+    def testRodada_15_ModificaDadosRodada_Dados_Congelados(self): 
+        print("Caso de Teste Rodada 15 -Dados estao Congelados")
         Deleta_Rodadas()
         Cria_Rodada()
         Cria_Dados()
@@ -410,8 +410,8 @@ class Teste_ModuloRodada_ModificaDadosRodada(unittest.TestCase):
         self.assertEqual(retorno_esperado,2)
         
     #Inicio teste para modificar a rodada caso nao existam dados    
-    def testRodada_14_ModificaDadosRodada_Nao_Existe_Dado(self): 
-        print("Caso de Teste Rodada 14 -Nao existem dados")
+    def testRodada_16_ModificaDadosRodada_Nao_Existe_Dado(self): 
+        print("Caso de Teste Rodada 16 -Nao existem dados")
         Deleta_Rodadas()
         Cria_Rodada()
         retorno_esperado = Modifica_Dados_Rodada()
@@ -419,8 +419,8 @@ class Teste_ModuloRodada_ModificaDadosRodada(unittest.TestCase):
         self.assertEqual(retorno_esperado,3)
         
     #Inicio teste para modificar a rodada caso nao exista rodada    
-    def testRodada_15_ModificaDadosRodada_Nao_Existe_Rodada(self): 
-        print("Caso de Teste Rodada 15 - Nao existe rodada criada")
+    def testRodada_17_ModificaDadosRodada_Nao_Existe_Rodada(self): 
+        print("Caso de Teste Rodada 17 - Nao existe rodada criada")
         Deleta_Rodadas()
         retorno_esperado = Modifica_Dados_Rodada()
         Destroi_Dados()
@@ -433,16 +433,16 @@ class Teste_ModuloRodada_PegaRodada(unittest.TestCase):
         #{1: None} - Lista de Rodadas esta vazia
 
     #Inicio teste para pegar rodada com sucesso    
-    def testRodada_16_PegaRodada_Ok_Condicao_Retorno(self): 
-        print("Caso de Teste Rodada 16 - Sucesso")
+    def testRodada_18_PegaRodada_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Rodada 18 - Sucesso")
         Deleta_Rodadas()
         Cria_Rodada()
         retorno_esperado = Pega_Rodada()
         self.assertEqual(retorno_esperado,{0: { 1: {"tentativas":3 ,"dados_rodada": []} }})
 
     #Inicio teste para pegar rodada caso a lista de Rodadas esteja vazia    
-    def testRodada_17_PegaRodada_Lista_Rodadas_Vazia(self): 
-        print("Caso de Teste Rodada 17 - Lista de Rodadas Vazia")
+    def testRodada_19_PegaRodada_Lista_Rodadas_Vazia(self): 
+        print("Caso de Teste Rodada 19 - Lista de Rodadas Vazia")
         Deleta_Rodadas()
         retorno_esperado = Pega_Rodada()
         self.assertEqual(retorno_esperado,{1:None})
@@ -511,7 +511,7 @@ class Teste_ModuloJogo_Atualiza_JogadorAtual(unittest.TestCase):
         #{3: []} - Caso o parametro jogadorAtual nao corresponda com nenhum dos jogadores presentes no jogo
 
     #Inicio teste para atualizar jogador atual com sucesso
-    def testJogo_07_AtualizaJogadorAtual_Ok_Condicao_Retorno(self): 
+    def testJogo_07_AtualizaJogadorAtual_O_Condicao_Retorno(self):
         print("Caso de Teste Jogo 07 - Sucesso ao atualizar o jogador")
         jogadorAtual = {1: "Aiko"}
         jogadores = [{1: "Aiko"}, {2: "Carol"}]
