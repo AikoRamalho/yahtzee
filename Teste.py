@@ -564,20 +564,24 @@ class Teste_ModuloPontuacao_CalculaPontuacao(unittest.TestCase):
 class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
     #Parametro: Dados, JogadorAtual
         #Dados - Os dados gerados pelo jogador
-        #JogadorAtual - O Jogador Atual
+        #idJogadorAtual - ID do Jogador Atual
     #Retornos possiveis
         #{0: Jogador_Atual} - Sucesso
         #{1: []} - Caso o Dado nao seja um objeto Dado
-        #{2: []} - Caso JogadorAtual nao seja um objeto Jogador
-        #{3: []} - Caso de erro ao mostrar os tipos de pontuacao
-        #{4: []} - Caso o parametro jogadorAtual nao corresponda com nenhum dos jogadores presentes no jogo
+        #{2: []} - Caso idJogadorAtual nao seja um objeto Jogador
+        #{3: []} - Caso o parametro idJogadorAtual nao corresponda com nenhum dos jogadores presentes no jogo
 
     #Inicio teste para tipo da pontuacao com sucesso
     def testPontuacao_03_TipoPontuacao_Ok_Condicao_Retorno(self): 
         print("Caso de Teste Pontuacao 03 - Sucesso ao dizer que tipo de pontuacao pode ser feita")
-        Dados = Jogar_Dados()
-        JogadorAtual = {2: "Carol"}
-        retorno_esperado = Tipo_Pontuacao(Dados,JogadorAtual)
+        Destroi_Dados()
+        Destruir_Tab()
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Jogar_Dados()
+        idJogadorAtual = 1
+        retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
         self.assertEqual(retorno_esperado,{0: ListaPontuacao})
         
     #Inicio teste para tipo da pontuacao caso o Dado nao seja um objeto Dado
