@@ -1,7 +1,7 @@
 #Versao 1.0.10
 #Ultima modificacao: Carlos Ribeiro
 import random
-__all__ = ["Cria_Dados", "Muda_Status", "Mostra_Dados", "Destroi_Dados", "Jogar_Dados"]
+__all__ = ["Cria_Dados", "Muda_Status", "Mostra_Dados", "Destroi_Dados", "Jogar_Dados", "Muda_Face"]
 
 dados = []
 #Modulo que implementa a criacao dos Dados,o ato de jogar os dados,
@@ -87,6 +87,12 @@ def Mostra_Dados():
     if(dados[0][1]["face"] == 0):
         return {2: []}
     return {0: dados}
+
+#Carlos aqui: adicionei Muda_Face so pra testar a tipo_pontuacao
+def Muda_Face(idDado,num):
+    dados[idDado-1][idDado]["face"] = num
+
+    return 0
 
 #funcao auxiliar para destruir os dados
 #Paramêtros: None

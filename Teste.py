@@ -3,7 +3,7 @@
 
 import unittest
 from Jogador import Cria_Novo_Jogador, Destroi_Jogadores, Pega_Jogadores
-from Dados import Cria_Dados, Muda_Status, Mostra_Dados, Destroi_Dados, Jogar_Dados
+from Dados import Cria_Dados, Muda_Status, Mostra_Dados, Destroi_Dados, Jogar_Dados, Muda_Face#Adicionado
 from Rodada import Cria_Rodada, Verifica_Tentativa, Atualiza_Tentativas, Modifica_Dados_Rodada, Deleta_Rodadas, Pega_Rodada
 from Jogo import Cria_Novo_Jogo, Verifica_Rodada, Atualiza_JogadorAtual
 from Pontuacao import Calcula_Pontuacao, Tipo_Pontuacao
@@ -574,42 +574,210 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
     #Inicio teste para tipo da pontuacao com sucesso
     def testPontuacao_03_TipoPontuacao_Ok_Condicao_Retorno(self): 
         print("Caso de Teste Pontuacao 03 - Sucesso ao dizer que tipo de pontuacao pode ser feita")
+        #Caso 1: 1 1 2 2 3
         Destroi_Dados()
         Destruir_Tab()
+        ListaEsperada = ["Ones","Twos","Threes","Chance"]
         Cria_Dados()
         Cria_Tab()
         Cria_Novo_Jogador("Aiko")
-        Jogar_Dados()
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,2)
+        Muda_Face(4,2)
+        Muda_Face(5,3)
         idJogadorAtual = 1
         retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
-        self.assertEqual(retorno_esperado,{0: ListaPontuacao})
+        self.assertEqual(retorno_esperado,{0: ListaEsperada})
+
+    def testPontuacao_04_TipoPontuacao_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Pontuacao 04 - Sucesso ao dizer que tipo de pontuacao pode ser feita")
+        #Caso 2: 4 4 5 5 6
+        Destroi_Dados()
+        Destruir_Tab()
+        ListaEsperada = ["Fours","Fives","Sixes","Chance"]
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,4)
+        Muda_Face(2,4)
+        Muda_Face(3,5)
+        Muda_Face(4,5)
+        Muda_Face(5,6)
+        idJogadorAtual = 1
+        retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
+        self.assertEqual(retorno_esperado,{0: ListaEsperada})
+
+    def testPontuacao_05_TipoPontuacao_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Pontuacao 05 - Sucesso ao dizer que tipo de pontuacao pode ser feita")
+        #Caso 3: 1 1 2 3 4
+        Destroi_Dados()
+        Destruir_Tab()
+        ListaEsperada = ["Ones","Twos","Threes","Fours","Small Straight","Chance"]
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,2)
+        Muda_Face(4,3)
+        Muda_Face(5,4)
+        idJogadorAtual = 1
+        retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
+        self.assertEqual(retorno_esperado,{0: ListaEsperada})
+
+    def testPontuacao_06_TipoPontuacao_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Pontuacao 06 - Sucesso ao dizer que tipo de pontuacao pode ser feita")
+        #Caso 4: 1 1 1 2 3
+        Destroi_Dados()
+        Destruir_Tab()
+        ListaEsperada = ["Ones","Twos","Threes","Three of a Kind","Chance"]
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,1)
+        Muda_Face(4,2)
+        Muda_Face(5,3)
+        idJogadorAtual = 1
+        retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
+        self.assertEqual(retorno_esperado,{0: ListaEsperada})
+
+    def testPontuacao_07_TipoPontuacao_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Pontuacao 07 - Sucesso ao dizer que tipo de pontuacao pode ser feita")
+        #Caso 5: 1 1 1 1 2
+        Destroi_Dados()
+        Destruir_Tab()
+        ListaEsperada = ["Ones","Twos","Four of a Kind","Chance"]
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,1)
+        Muda_Face(4,1)
+        Muda_Face(5,2)
+        idJogadorAtual = 1
+        retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
+        self.assertEqual(retorno_esperado,{0: ListaEsperada})
+
+    def testPontuacao_08_TipoPontuacao_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Pontuacao 08 - Sucesso ao dizer que tipo de pontuacao pode ser feita")
+        #Caso 6: 1 1 1 1 1
+        Destroi_Dados()
+        Destruir_Tab()
+        ListaEsperada = ["Ones","Yahtzee","Chance"]
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,1)
+        Muda_Face(4,1)
+        Muda_Face(5,1)
+        idJogadorAtual = 1
+        retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
+        self.assertEqual(retorno_esperado,{0: ListaEsperada})
+
+    def testPontuacao_09_TipoPontuacao_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Pontuacao 09 - Sucesso ao dizer que tipo de pontuacao pode ser feita")
+        #Caso 7: 1 1 2 2 2
+        Destroi_Dados()
+        Destruir_Tab()
+        ListaEsperada = ["Ones","Twos","Full House","Chance"]
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,2)
+        Muda_Face(4,2)
+        Muda_Face(5,2)
+        idJogadorAtual = 1
+        retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
+        self.assertEqual(retorno_esperado,{0: ListaEsperada})
+
+    def testPontuacao_10_TipoPontuacao_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Pontuacao 10 - Sucesso ao dizer que tipo de pontuacao pode ser feita")
+        #Caso 8: 1 3 4 5 6
+        Destroi_Dados()
+        Destruir_Tab()
+        ListaEsperada = ["Ones","Threes","Fours","Fives","Sixes","Small Straight","Chance"]
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,3)
+        Muda_Face(3,4)
+        Muda_Face(4,5)
+        Muda_Face(5,6)
+        idJogadorAtual = 1
+        retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
+        self.assertEqual(retorno_esperado,{0: ListaEsperada})
+
+    def testPontuacao_11_TipoPontuacao_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Pontuacao 11 - Sucesso ao dizer que tipo de pontuacao pode ser feita")
+        #Caso 9: 1 2 4 5 6
+        Destroi_Dados()
+        Destruir_Tab()
+        ListaEsperada = ["Ones","Twos","Fours","Fives","Sixes","Chance"]
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,2)
+        Muda_Face(3,4)
+        Muda_Face(4,5)
+        Muda_Face(5,6)
+        idJogadorAtual = 1
+        retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
+        self.assertEqual(retorno_esperado,{0: ListaEsperada})
+
+    def testPontuacao_12_TipoPontuacao_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Pontuacao 12 - Sucesso ao dizer que tipo de pontuacao pode ser feita")
+        #Caso 10: 1 2 3 4 5
+        Destroi_Dados()
+        Destruir_Tab()
+        ListaEsperada = ["Ones","Twos","Threes","Fours","Fives","Small Straight","Large Straight","Chance"]
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,2)
+        Muda_Face(3,3)
+        Muda_Face(4,4)
+        Muda_Face(5,5)
+        idJogadorAtual = 1
+        retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
+        self.assertEqual(retorno_esperado,{0: ListaEsperada})
         
     #Inicio teste para tipo da pontuacao caso o Dado nao seja um objeto Dado
-    def testPontuacao_04_TipoPontuacao_Dado_Nao_Seja_Objeto_Dado(self): 
-        print("Caso de Teste Pontuacao 04 - Dado nao eh um objeto Dado")
+    def testPontuacao_13_TipoPontuacao_Dado_Nao_Seja_Objeto_Dado(self): 
+        print("Caso de Teste Pontuacao 13 - Dado nao eh um objeto Dado")
         Destroi_Dados()
         JogadorAtual = {2: "Carol"}
         retorno_esperado = Tipo_Pontuacao(Dados,JogadorAtual)
         self.assertEqual(retorno_esperado,{1: []})
     
     #Inicio teste para tipo da pontuacao caso JogadorAtual nao seja um objeto Jogador    
-    def testPontuacao_05_TipoPontuacao_JogadorAtual_Nao_Seja_Objeto_Jogador(self): 
-        print("Caso de Teste Pontuacao 05 - Dado nao eh um objeto Dado")
+    def testPontuacao_14_TipoPontuacao_JogadorAtual_Nao_Seja_Objeto_Jogador(self): 
+        print("Caso de Teste Pontuacao 14 - Dado nao eh um objeto Dado")
         Dados = Jogar_Dados()
         JogadorAtual = "nao jogador"
         retorno_esperado = Tipo_Pontuacao(Dados,JogadorAtual)
         self.assertEqual(retorno_esperado,{2: []})
         
     #Inicio teste para tipo da pontuacao caso de erro ao mostrar os tipos de pontuacao
-    def testPontuacao_06_TipoPontuacao_Nao_eh_Possivel_Mostrar_Os_Tipos(self): 
-        print("Caso de Teste Pontuacao 06 - nao eh possivel mostrar os tipos de pontuacao")
+    def testPontuacao_15_TipoPontuacao_Nao_eh_Possivel_Mostrar_Os_Tipos(self): 
+        print("Caso de Teste Pontuacao 15 - nao eh possivel mostrar os tipos de pontuacao")
         #Nao sei como fazer para dar esse erro
         retorno_esperado = Tipo_Pontuacao(Dados,JogadorAtual)
         self.assertEqual(retorno_esperado,{3: []})
         
     #Inicio teste para tipo da pontuacao caso o parametro jogadorAtual nao corresponda com nenhum dos jogadores presentes no jogo   
-    def testPontuacao_07_TipoPontuacao_JogadorAtual_Nao_Faz_Parte_De_Jogadores(self): 
-        print("Caso de Teste Pontuacao 07 - JogadorAtual nao faz parte da lista Jogadores")
+    def testPontuacao_16_TipoPontuacao_JogadorAtual_Nao_Faz_Parte_De_Jogadores(self): 
+        print("Caso de Teste Pontuacao 16 - JogadorAtual nao faz parte da lista Jogadores")
         Dados = Jogar_Dados()
         JogadorAtual = {3: "Carlos"}
         retorno_esperado = Tipo_Pontuacao(Dados,JogadorAtual)

@@ -93,8 +93,8 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
     listaPont = []
     repetidos = {}
 
-    if type(dados) != list:
-        return {1: []}
+    #if type(dados) != list:
+    #    return {1: []}
     if type(idJogadorAtual) != int:
         return {2: []}
     if idJogadorAtual != 1 and idJogadorAtual != 2:
@@ -136,7 +136,7 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
         elif achado == 1:   #Para poder verificar os repetidos
             listaAux.append(pont)
         
-        print(face)
+        #print(face)
 
     Atribui_Repetidos(listaAux,repetidos)
     qtdRepetidos = len(repetidos)
@@ -154,8 +154,8 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
                         facesDadosR.append(face)
                 ordenadosR = sorted(facesDadosR)
                 numLista = len(ordenadosR)
-                for i in ordenadosR:
-                    print("Num: ",i)
+                #for i in ordenadosR:
+                    #print("Num: ",i)
                 x=1
                 while(x<numLista):
                     
@@ -164,7 +164,7 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
                     sub = elemAtual-elemPass
                     if sub == 1:
                         cont=cont+1
-                    print("x: ",x)
+                    #print("x: ",x)
                     x=x+1
                 if cont == 3:
                     pont = "Small Straight"
@@ -188,6 +188,7 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
                 listaPont.append(pont)
                    
     elif qtdRepetidos == 2:     #Caso tenham dois repetidos
+        achado = 0
         #Unico jeito de dar full house
         for i in repetidos:
             qtdRepeticoes = len(repetidos[i])
@@ -206,7 +207,6 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
             ver = Verifica_Pont_Preenchida(pont, idJogadorAtual)
             if ver == 1:
                 achado = 2
-            
             if achado == 0:
                 listaPont.append(pont)
                 
@@ -222,23 +222,25 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
             facesDados.append(face)
         ordenados = sorted(facesDados)
         numLista = len(ordenados)
-        print("NumLista: ",numLista)
+        #print("NumLista: ",numLista)
         x=1
         while(x<numLista):
             elemAtual = ordenados[x]
             elemPass = ordenados[x-1]
-            print("elemAtual: ",elemAtual)
-            print("elemPass: ",elemPass)
+            #print("elemAtual: ",elemAtual)
+            #print("elemPass: ",elemPass)
             sub = elemAtual-elemPass
-            print("sub: ",sub)
+            #print("sub: ",sub)
             if sub == 1:
                 cont=cont+1
+            if cont == 1 and sub == 2:
+                break
             if cont == 3:
                 pont = "Small Straight"
             elif cont == 4:
                 pont = "Large Straight"
             x=x+1
-        print("cont: ",cont)
+        #print("cont: ",cont)
         #Para verificar que a casa nao esta preenchida
         ver = Verifica_Pont_Preenchida(pont, idJogadorAtual)
         if ver == 1:
@@ -261,6 +263,9 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
     ver = Verifica_Pont_Preenchida("Chance",idJogadorAtual)
     if ver == 0:
         listaPont.append("Chance")
+
+    #for j in listaPont:
+    #    print(j)
     
     return {0: listaPont}
 
@@ -297,13 +302,18 @@ def Pega_Faces(dados):
 
     return listFaces
 
-Dados.Cria_Dados()
-Tabuleiro.Cria_Tab()
-Dados.Jogar_Dados()
-x = Dados.Mostra_Dados()
-dados = x[0]
-listaPont=Tipo_Pontuacao(dados,1)[0]
-for i in listaPont:
-    print(i)
-Calcula_Pontuacao(dados,"Three of a Kind", 1)
+#Dados.Cria_Dados()
+#Tabuleiro.Cria_Tab()
+#Dados.Jogar_Dados()
+#Dados.Muda_Face(1,1)
+#Dados.Muda_Face(2,2)
+#Dados.Muda_Face(3,4)
+#Dados.Muda_Face(4,5)
+#Dados.Muda_Face(5,6)
+#x = Dados.Mostra_Dados()
+#dados = x[0]
+#listaPont=Tipo_Pontuacao(dados,1)[0]
+#for i in listaPont:
+#    print(i)
+#Calcula_Pontuacao(dados,"Three of a Kind", 1)
 
