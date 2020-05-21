@@ -76,7 +76,7 @@ def Jogar_Dados():
 
 #Funcao que retorna um dicionario contendo um codigo como chave
 #e uma lista de objetos dado
-#Parâmetros: None
+#Parametros: None
 #codigo tem valor 0 quando sucesso
 #valor 1 caso nao hajam dados criados
 #valor 2 caso os dados ainda nao tenhma sido arremessados
@@ -89,13 +89,29 @@ def Mostra_Dados():
     return {0: dados}
 
 #Carlos aqui: adicionei Muda_Face so pra testar a tipo_pontuacao
-def Muda_Face(idDado,num):
-    dados[idDado-1][idDado]["face"] = num
+#Funcao que altera a face de um dado especifico
+#Parametros: idDado, numFace
+#retorna 0 caso sucesso
+#retorna 1 caso idDado nao seja int
+#retorna 2 caso id dado nao corresponda a nenhum dos dados
+#retorna 3 caso numFace nao seja int
+#retorna 4 caso o numFace seja diferente de 1, 2, 3, 4, 5 ou 6
+def Muda_Face(idDado,numFace):
+    
+    if type(idDado) != int:
+        return 1
+    if idDado > 5 or idDado < 1:
+        return 2
+    if type(numFace) != int:
+        return 3
+    if numFace < 1 or numFace > 6:
+        return 4
 
+    dados[idDado-1][idDado]["face"] = numFace
     return 0
 
 #funcao auxiliar para destruir os dados
-#Paramêtros: None
+#Parametros: None
 #retorna 0 caso sucesso
 #retorna 1 caso a lista ja esteja vazia
 def Destroi_Dados():

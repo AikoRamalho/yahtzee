@@ -3,7 +3,7 @@
 
 import Jogador
 
-__all__ = ["Cria_Tab", "Destruir_Tab", "InserirPontuacao", "Verifica_Vencedor"]
+__all__ = ["Cria_Tab", "Destruir_Tab", "InserirPontuacao", "Verifica_Vencedor", "Pega_Tabuleiro"]
 
 tabuleiro = []
 

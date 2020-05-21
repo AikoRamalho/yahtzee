@@ -3,7 +3,7 @@
 import Dados
 import Rodada
 import Jogador
-__all__ = ["Cria_Novo_Jogo", "Verifica_Rodada", "Atualiza_JogadorAtual"]
+__all__ = ["Cria_Novo_Jogo", "Verifica_Rodada", "Atualiza_JogadorAtual", "Destruir_Jogo"]
 jogo=[]
 
 #Descrição: Cria um novo objeto jogo. Retorna 0 se conseguiu criar o objeto Jogo corretamente, caso já tenha objeto Jogo criado, retorna 1.
@@ -14,9 +14,9 @@ jogo=[]
 
 def Cria_Novo_Jogo():
     numero_jogo=len(jogo)
-    retorno_pega_jogadores=Jogador.Pega_Jogadores()
+    jogadorAtual=None
     if(jogo == []):
-        novo_jogo = {numero_jogo+1: {"jogador atual": retorno_pega_jogadores, "dados_atuais": []}}
+        novo_jogo = {numero_jogo+1: {"jogador atual": {1:jogadorAtual}, "dados_atuais": []}}
         jogo.append(novo_jogo)
         return 0
     return 1
@@ -32,16 +32,14 @@ def Cria_Novo_Jogo():
 
 def Verifica_Rodada(id):
     retorno_verifica_tentativa=Rodada.Verifica_Tentativa()
-    print("TENTATIVAS",retorno_verifica_tentativa)
-    print("IDDDD",id)
-    if(id not in range(0,26)):
+    if(retorno_verifica_tentativa==2):
+        return 0
+    if(retorno_verifica_tentativa==0 and type(id)==int and id in range(0,26)):
+        return 1
+    if(type(id)==int and id not in range(0,26) ):
         return 2
     if(type(id)!= int):
         return 3
-    if(retorno_verifica_tentativa==0):
-        return 0
-    if(retorno_verifica_tentativa!=0):
-        return 1
 
 
 #Descrição: Função que recebe a lista dos dois jogadores e o jogador_atual.
@@ -56,8 +54,8 @@ def Verifica_Rodada(id):
 #{3: []} - Caso o parametro jogadorAtual não corresponda com nenhum dos jogadores presentes no jogo
 
 def Atualiza_JogadorAtual(jogadorAtual,jogadores):
+    retorno_jogador_criado=Jogador.Cria_Novo_Jogador(jogadorAtual)
     retorno_pega_jogadores=Jogador.Pega_Jogadores()
-    print(retorno_pega_jogadores)
     if(jogadorAtual == jogadores[0]):
         jogadorAtual=jogadores[1]
         return {0:jogadorAtual}
@@ -65,10 +63,18 @@ def Atualiza_JogadorAtual(jogadorAtual,jogadores):
         jogadorAtual=jogadores[1]
         return {0:jogadorAtual}
     if(type(jogadores)!= list and len(jogadores)!=2):
-        print("TO AQUI", type(jogadores), len(jogadores), jogadores)
         return {1:[]}
-    if(jogadorAtual not in retorno_pega_jogadores):
-        return {2:[]}
-    if(jogadorAtual not in jogadores):
-        return {3:[]}
-
+    for (id,jogador) in retorno_pega_jogadores.values():
+        a=(id,jogador)
+        if(type(jogadorAtual) !=type(a[0])):
+            return {2:[]}
+        if(jogadorAtual not in (id,jogador)):
+            return {3:[]}
+#funcao que destroi o modulo jogo
+#retorna 0 caso sucesso
+#retorna 1 caso jogo nao exista
+def Destruir_Jogo():
+    if(len(jogo)==0):
+        return 1
+    jogo.clear()
+    return 0
