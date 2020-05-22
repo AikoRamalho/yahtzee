@@ -93,8 +93,8 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
     listaPont = []
     repetidos = {}
 
-    #if type(dados) != list:
-    #    return {1: []}
+    if Dados.Mostra_Dados()[0] != dados:
+        return {1: []}
     if type(idJogadorAtual) != int:
         return {2: []}
     if idJogadorAtual != 1 and idJogadorAtual != 2:
@@ -198,6 +198,21 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
                 contRep = contRep + 2
         if contRep == 5:
             pont = "Full House"
+
+            #Um full house tbm pode conter um three of a kind
+            #Para verificar que a lista nao vai ter elemento repetido
+            for x in listaPont:
+                if x == "Three of a Kind":
+                    achado = 3
+
+            ver = Verifica_Pont_Preenchida("Three of a Kind", idJogadorAtual)
+            if ver == 1:
+                achado = 4
+
+            if achado == 0:
+                listaPont.append("Three of a Kind")
+
+            achado = 0
             
             #Para verificar que a lista nao vai ter elemento repetido
             for x in listaPont:
@@ -302,18 +317,18 @@ def Pega_Faces(dados):
 
     return listFaces
 
-#Dados.Cria_Dados()
-#Tabuleiro.Cria_Tab()
-#Dados.Jogar_Dados()
-#Dados.Muda_Face(1,1)
-#Dados.Muda_Face(2,2)
-#Dados.Muda_Face(3,4)
-#Dados.Muda_Face(4,5)
-#Dados.Muda_Face(5,6)
-#x = Dados.Mostra_Dados()
-#dados = x[0]
-#listaPont=Tipo_Pontuacao(dados,1)[0]
-#for i in listaPont:
-#    print(i)
+Dados.Cria_Dados()
+Tabuleiro.Cria_Tab()
+Dados.Jogar_Dados()
+Dados.Muda_Face(1,1)
+Dados.Muda_Face(2,1)
+Dados.Muda_Face(3,1)
+Dados.Muda_Face(4,2)
+Dados.Muda_Face(5,2)
+x = Dados.Mostra_Dados()
+dados = x[0]
+listaPont=Tipo_Pontuacao(dados,1)[0]
+for i in listaPont:
+    print(i)
 #Calcula_Pontuacao(dados,"Three of a Kind", 1)
 
