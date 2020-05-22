@@ -1,4 +1,4 @@
-#Versao 1.2.0
+#Versao 1.2.3
 #Ultima modificacao: Carlos Ribeiro
 
 from collections import defaultdict
@@ -18,17 +18,23 @@ __all__ = ["Calcula_Pontuacao", "Tipo_Pontuacao"]
 #retorna {2: None} Caso o nomePontuacao nao esteja presente
 #na lista de pontuacoes possiveis
 def Calcula_Pontuacao(dados, nomePontuacao, idJogadorAtual):
-    listaPont = Tipo_Pontuacao(dados,idJogadorAtual)[0]
+    retorno_mostra_dados=Dados.Mostra_Dados()
     faces = Pega_Faces(dados)
     pont = 0 #pontuacao a ser calculada
-
-    if type(nomePontuacao) != str:
-        return {1: None}
-
-    if nomePontuacao in listaPont == False:
-        return {2: None}
-
+    if(type(dados)==list):
+        if dados[0]!= retorno_mostra_dados[0][0]:
+            return {3:None}
+    else:
+        if type(dados)!= type(retorno_mostra_dados):
+            return {3:None}
+    if type(idJogadorAtual) != int:
+        return {4: None}
     
+    if idJogadorAtual != 1 and idJogadorAtual != 2:
+        return {5: None}
+    listaPont = Tipo_Pontuacao(dados,idJogadorAtual)[0]
+    if (nomePontuacao in listaPont)==False:
+        return {6: None}
     if nomePontuacao == "Ones":
         for i in faces:
             if i == 1:
@@ -45,7 +51,7 @@ def Calcula_Pontuacao(dados, nomePontuacao, idJogadorAtual):
         for i in faces:
             if i == 4:
                 pont = pont + 4 #A cada dado com valor 4, soma-se 4.
-    elif nomePontuacao == "Five":
+    elif nomePontuacao == "Fives":
         for i in faces:
             if i == 5:
                 pont = pont + 5 #A cada dado com valor 5, soma-se 5.
@@ -92,11 +98,15 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
     facesDadosR = []
     listaPont = []
     repetidos = {}
-
-    if Dados.Mostra_Dados()[0] != dados:
-        return {1: []}
+    retorno_mostra_dados=Dados.Mostra_Dados()
     if type(idJogadorAtual) != int:
         return {2: []}
+    if(type(dados)==list):
+        if dados[0]!= retorno_mostra_dados[0][0]:
+            return {1:[]}
+    else:
+        if type(dados)!= type(retorno_mostra_dados):
+            return {1:[]}
     if idJogadorAtual != 1 and idJogadorAtual != 2:
         return {3: []}
     
@@ -168,11 +178,41 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
                     x=x+1
                 if cont == 3:
                     pont = "Small Straight"
-            elif qtdRepeticoes == 3:
-                pont = "Three of a Kind"
-            elif qtdRepeticoes == 4:
-                pont = "Four of a Kind"
-            elif qtdRepeticoes == 5:
+            if qtdRepeticoes >= 3 and qtdRepeticoes <= 5:
+
+                #Um Three of a Kind tambem pode ser ferito, caso seja um four of a kind
+                #Para verificar que a lista nao vai ter elemento repetido
+                for o in listaPont:
+                    if "Three of a Kind" == o:
+                        achado = 1
+                #Para verificar que a casa nao esta preenchida  
+                ver = Verifica_Pont_Preenchida("Three of a Kind", idJogadorAtual)
+                if ver == 1:
+                    achado = 2
+
+                if achado == 0:
+                    listaPont.append("Three of a Kind")
+
+                achado = 0
+                    
+            if qtdRepeticoes >= 4 and qtdRepeticoes <=5:
+
+                #Um Three of a Kind tambem pode ser ferito, caso seja um four of a kind
+                #Para verificar que a lista nao vai ter elemento repetido
+                for o in listaPont:
+                    if "Four of a Kind" == o:
+                        achado = 1
+                #Para verificar que a casa nao esta preenchida  
+                ver = Verifica_Pont_Preenchida("Four of a Kind", idJogadorAtual)
+                if ver == 1:
+                    achado = 2
+
+                if achado == 0:
+                    listaPont.append("Four of a Kind")
+
+                achado = 0
+                
+            if qtdRepeticoes == 5:
                 pont = "Yahtzee"
 
             #Para verificar que a lista nao vai ter elemento repetido
@@ -308,7 +348,18 @@ def Atribui_Repetidos(lista, repetidos):
 
     return 0
 
+#Modulo que pega as faces do dado
+#Parametro: o objeto dados
+#Retorna a lista de faces caso sucesso
+#retorna {1:[]} caso o dado nao seja um objeto dado
 def Pega_Faces(dados):
+    retorno_mostra_dados=Dados.Mostra_Dados()
+    if(type(dados)==list):
+        if dados[0]!= retorno_mostra_dados[0][0]:
+            return {1:[]}
+    else:
+        if type(dados)!= type(retorno_mostra_dados):
+            return {1:[]}
     listFaces = []
     k=0
     for i in dados:
@@ -317,18 +368,14 @@ def Pega_Faces(dados):
 
     return listFaces
 
-Dados.Cria_Dados()
-Tabuleiro.Cria_Tab()
-Dados.Jogar_Dados()
-Dados.Muda_Face(1,1)
-Dados.Muda_Face(2,1)
-Dados.Muda_Face(3,1)
-Dados.Muda_Face(4,2)
-Dados.Muda_Face(5,2)
-x = Dados.Mostra_Dados()
-dados = x[0]
-listaPont=Tipo_Pontuacao(dados,1)[0]
-for i in listaPont:
-    print(i)
-#Calcula_Pontuacao(dados,"Three of a Kind", 1)
-
+#Dados.Cria_Dados()
+#Tabuleiro.Cria_Tab()
+#Dados.Muda_Face(1,1)
+#Dados.Muda_Face(2,1)
+#Dados.Muda_Face(3,2)
+#Dados.Muda_Face(4,2)
+#Dados.Muda_Face(5,2)
+#dados = Dados.Mostra_Dados()[0]
+#listaPont = Tipo_Pontuacao(dados, 1)[0]
+#for i in listaPont:
+#    print(i)

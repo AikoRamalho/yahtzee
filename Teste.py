@@ -1,13 +1,13 @@
-#Versao 1.8.3
-#Ultima modificacao: Carlos Ribeiro
+#Versao 1.8.5
+#Ultima modificacao: Carlos Ribeiro da Rocha
 
 import unittest
 from Jogador import Cria_Novo_Jogador, Destroi_Jogadores, Pega_Jogadores
-from Dados import Cria_Dados, Muda_Status, Mostra_Dados, Destroi_Dados, Jogar_Dados, Muda_Face#Adicionado
+from Dados import Cria_Dados, Muda_Status, Mostra_Dados, Destroi_Dados, Jogar_Dados, Muda_Face
 from Rodada import Cria_Rodada, Verifica_Tentativa, Atualiza_Tentativas, Modifica_Dados_Rodada, Deleta_Rodadas, Pega_Rodada
 from Jogo import Cria_Novo_Jogo, Verifica_Rodada, Atualiza_JogadorAtual, Destruir_Jogo
-from Pontuacao import Calcula_Pontuacao, Tipo_Pontuacao#completo, falta adicionar calcula
-from Tabuleiro import Cria_Tab, Destruir_Tab, InserirPontuacao, Verifica_Vencedor, Pega_Tabuleiro#acidionado
+from Pontuacao import Calcula_Pontuacao, Tipo_Pontuacao,Pega_Faces
+from Tabuleiro import Cria_Tab, Destruir_Tab, InserirPontuacao, Verifica_Vencedor, Pega_Tabuleiro
 from Principal import Desenha_Tab, Tela_Inicial
 
 class Teste_ModuloJogador_CriaNovoJogador(unittest.TestCase):
@@ -50,14 +50,14 @@ class Teste_ModuloJogador_DestroiJogadores(unittest.TestCase):
 
     #destroi jogador ok -> retorno esperado: 0
     def testJogador_04_DestroiJogadores_Ok_Condicao_Retorno(self):
-        print("Caso de Teste Jogador 04 - Jogadores destruidos com sucesso")
+        print("Caso de Teste Jogador 01 - Jogadores destruidos com sucesso")
         Cria_Novo_Jogador('aiko')
         retorno_esperado = Destroi_Jogadores()
         self.assertEqual(retorno_esperado, 0)
         
     #Lista de jogadores ja esta vazia -> retorno esperado: 1
     def testJogador_05_DestroiJogadores_ListaJaVazia(self): 
-        print("Caso de Teste Jogador 05 - Lista Jogadores ja vazia")
+        print("Caso de Teste Jogador 02 - Lista Jogadores ja vazia")
         retorno_esperado = Destroi_Jogadores()
         self.assertEqual(retorno_esperado, 1)
 
@@ -70,7 +70,7 @@ class Teste_ModuloJogador_PegaJogador(unittest.TestCase):
 
     #pega jogador caso sucesso
     def testJogador_06_PegarJogadores_Ok_Condicao_Retorno(self): 
-        print("Caso de Teste Jogador 06 - Pegar jogadores com sucesso")
+        print("Caso de Teste Jogador 04 - Pegar jogadores com sucesso")
         Destroi_Jogadores()
         Cria_Novo_Jogador('aiko')
         Cria_Novo_Jogador('carol')
@@ -79,7 +79,7 @@ class Teste_ModuloJogador_PegaJogador(unittest.TestCase):
 
     #pega jogador caso falta um jogador p ser cadastrado
     def testJogador_07_PegarJogadores_Falta_Um_Jogador(self): 
-        print("Caso de Teste Jogador 07 - Falta um jogador para ser cadastrado")
+        print("Caso de Teste Jogador 05 - Falta um jogador para ser cadastrado")
         Destroi_Jogadores()
         Cria_Novo_Jogador('eu')
         retorno_esperado = Pega_Jogadores()
@@ -87,7 +87,7 @@ class Teste_ModuloJogador_PegaJogador(unittest.TestCase):
         
     #pega jogador caso faltam dois jogadores p serem cadastrados
     def testJogador_08_PegarJogadores_Faltam_Dois_Jogadores(self): 
-        print("Caso de Teste Jogador 08 - Faltam dois jogadores para serem cadastrados")
+        print("Caso de Teste Jogador 06 - Faltam dois jogadores para serem cadastrados")
         Destroi_Jogadores()
         retorno_esperado = Pega_Jogadores()
         self.assertEqual(retorno_esperado,{2:[]})
@@ -293,7 +293,6 @@ class Teste_ModuloDados_MudaFace(unittest.TestCase):
         numFace = 10
         retorno_esperado = Muda_Face(idDado, numFace)
         self.assertEqual(retorno_esperado, 4)
-
 class Teste_ModuloRodada_CriaRodada(unittest.TestCase):
     #Parametro: NULL
     #Retornos possiveis: 0, 1
@@ -383,8 +382,9 @@ class Teste_ModuloRodada_Atualiza_Tentativa(unittest.TestCase):
         
     #Inicio teste para atualizar tentativa com sucesso
     def testRodada_08_Atualiza_Tentativa_Ok_Condicao_Retorno(self): 
-        print("Caso de Teste Rodada 08 - Sucesso, tentativa atualizada")
+        print("Caso de Teste Rodada 08 - Suceso, tentativa atualizada")
         Deleta_Rodadas()
+        Destroi_Dados()
         Cria_Rodada()
         retorno_esperado = Atualiza_Tentativas(2)
         self.assertEqual(retorno_esperado,0)
@@ -394,6 +394,7 @@ class Teste_ModuloRodada_Atualiza_Tentativa(unittest.TestCase):
         print("Caso de Teste Rodada 09 - Numero inconsistente")
         Deleta_Rodadas()
         Cria_Rodada()
+        Destroi_Dados()
         retorno_esperado = Atualiza_Tentativas(3)
         self.assertEqual(retorno_esperado,1)
 
@@ -510,15 +511,12 @@ class Teste_ModuloJogo_CriaNovoJogo(unittest.TestCase):
     #Inicio teste para criar novo jogo com sucesso
     def testJogo_01_CriaNovoJogo_Ok_Condicao_Retorno(self): 
         print("Caso de Teste Jogo 01 - Jogo novo criado com sucesso")
-        Destruir_Jogo()
         retorno_esperado = Cria_Novo_Jogo()
         self.assertEqual(retorno_esperado,0)
 
     #Inicio teste para criar novo jogo caso ja haja um jogo criado
     def testJogo_02_CriaNovoJogo_Jogo_Ja_Criado(self): 
         print("Caso de Teste Jogo 02 - Jogo ja criado")
-        Destruir_Jogo()
-        Cria_Novo_Jogo()
         retorno_esperado = Cria_Novo_Jogo()
         self.assertEqual(retorno_esperado,1)
 
@@ -542,24 +540,19 @@ class Teste_ModuloJogo_VerificaRodada(unittest.TestCase):
     #Inicio teste para verificar rodada caso restem tentativas
     def testJogo_04_VerificaRodada_Ainda_Restam_Tentativas(self): 
         print("Caso de Teste Jogo 04 - Ainda Restam Tentativas")
-        Deleta_Rodadas()
         Cria_Rodada()  
         retorno_esperado = Verifica_Rodada(2)
         self.assertEqual(retorno_esperado,1)
         
     #Inicio teste para verificar rodada caso o id passado nao corresponda aos ids disponiveis                   
     def testJogo_05_VerificaRodadaJogo_Nao_Tem_O_ID(self): 
-        print("Caso de Teste Jogo 05 - Id nao coerente com o numero de rodadas do jogo")
-        Deleta_Rodadas()
-        Cria_Rodada()  
+        print("Caso de Teste Jogo 05 - Id nao coerente com o numero de rodadas do jogo")   
         retorno_esperado = Verifica_Rodada(200) 
         self.assertEqual(retorno_esperado,2)
 
     #Inicio teste para verificar rodada caso o id tenha sido passado incorretamente
     def testJogo_06_VerificaRodadaJogo_ID_Passado_Incorretamente(self): 
-        print("Caso de Teste Jogo 06 - ID passado incorretamente")
-        Deleta_Rodadas()
-        Cria_Rodada()
+        print("Caso de Teste Jogo 06 - ID passado incorretamente")   
         retorno_esperado = Verifica_Rodada("1")
         self.assertEqual(retorno_esperado,3)
 
@@ -576,9 +569,6 @@ class Teste_ModuloJogo_Atualiza_JogadorAtual(unittest.TestCase):
     #Inicio teste para atualizar jogador atual com sucesso
     def testJogo_07_AtualizaJogadorAtual_Ok_Condicao_Retorno(self): 
         print("Caso de Teste Jogo 07 - Sucesso ao atualizar o jogador")
-        Destroi_Jogadores()
-        Cria_Novo_Jogador("Aiko")
-        Cria_Novo_Jogador("Carol")
         jogadorAtual = {1: "Aiko"}
         jogadores = [{1: "Aiko"}, {2: "Carol"}]
         retorno_esperado = Atualiza_JogadorAtual(jogadorAtual,jogadores) #Considerando que comeca com o Aiko
@@ -587,9 +577,6 @@ class Teste_ModuloJogo_Atualiza_JogadorAtual(unittest.TestCase):
     #Inicio teste para atualizar jogador atual caso o parametro Jogadores nao sejam uma lista de dois jogadores
     def testJogo_08_AtualizaJogadorAtual_Jogadores_Nao_Passado_Corretamente(self): 
         print("Caso de Teste Jogo 08 - Jogadores nao passado corretamente")
-        Destroi_Jogadores()
-        Cria_Novo_Jogador("Aiko")
-        Cria_Novo_Jogador("Carol")
         jogadorAtual = {2: "Carol"}
         jogadores = "nao lista"                 
         retorno_esperado = Atualiza_JogadorAtual(jogadorAtual,jogadores)
@@ -598,9 +585,6 @@ class Teste_ModuloJogo_Atualiza_JogadorAtual(unittest.TestCase):
     #Inicio teste para atualizar jogador atual caso JogadorAtual nao seja um objeto Jogador    
     def testJogo_09_AtualizaJogadorAtual_JogadorAtual_Nao_Passado_Corretamente(self): 
         print("Caso de Teste Jogo 09 - JogadorAtual nao eh um objeto Jogador")
-        Destroi_Jogadores()
-        Cria_Novo_Jogador("Aiko")
-        Cria_Novo_Jogador("Carol")
         jogadorAtual = "nao Jogador"
         jogadores = [{1: "Aiko"}, {2: "Carol"}]             
         retorno_esperado = Atualiza_JogadorAtual(jogadorAtual,jogadores)
@@ -609,22 +593,18 @@ class Teste_ModuloJogo_Atualiza_JogadorAtual(unittest.TestCase):
     #Inicio teste para atualizar jogador atual caso o parametro jogadorAtual nao corresponda com nenhum dos jogadores presentes no jogo
     def testJogo_10_AtualizaJogadorAtual_JogadorAtual_Nao_Faz_Parte_De_Jogadores(self): 
         print("Caso de Teste Jogo 10 - JogadorAtual nao faz parte da lista Jogadores")
-        Destroi_Jogadores()
-        Cria_Novo_Jogador("Aiko")
-        Cria_Novo_Jogador("Carol")
         jogadorAtual = {3: "Carlos"}
         Cria_Novo_Jogador(jogadorAtual)
         jogadores = [{1: "Aiko"}, {2: "Carol"}]             
         retorno_esperado = Atualiza_JogadorAtual(jogadorAtual,jogadores)
         self.assertEqual(retorno_esperado,{3: []})
-        
 class Teste_ModuloJogo_DestruirJogo(unittest.TestCase):
     #Parametro: NULL
     #Retornos possiveis:
         #0 - Sucesso
         #1 - Nao existe Jogo
 
-    #Inicio teste para destruir jogo com sucesso
+    #Inicio teste para destruir tabuleiro com sucesso
     def testJogo_11_DestruirJogo_Ok_Condicao_Retorno(self): 
         print("Caso de Teste Jogo 11 - Jogo destruido com sucesso")
         Destruir_Jogo()
@@ -632,12 +612,9 @@ class Teste_ModuloJogo_DestruirJogo(unittest.TestCase):
         retorno_esperado = Destruir_Jogo()
         self.assertEqual(retorno_esperado,0)
         
-    #Inicio teste para destruir jogo caso nao exista jogo
+    #Inicio teste para destruir tabuleiro caso nao exista tabuleiro
     def testJogo_12_DestruirJogo_Nao_Existe_Jogo(self): 
         print("Caso de Teste Jogo 12 - Jogo nao existe")
-        Destruir_Jogo()
-        Cria_Novo_Jogo()
-        Destruir_Jogo()
         retorno_esperado = Destruir_Jogo()
         self.assertEqual(retorno_esperado,1)
 
@@ -647,18 +624,137 @@ class Teste_ModuloPontuacao_CalculaPontuacao(unittest.TestCase):
         #{0: Jogador_Atual} - Sucesso
         #{1: []} - Caso as casas da coluna nao esteja devidamente preenchidas
         
-    #Inicio teste para calcular pontuacao com sucesso 
-    def testPontuacao_01_CalculaPontuacao_Ok_Condicao_Retorno(self): 
+    #Inicio teste para calcular pontuacao com sucesso
+
+    def testPontuacao_01_CalculaPontuacao_Ok_Condicao_Retorno_Ones(self): 
         print("Caso de Teste Pontuacao 01 - Pontuacao calculada com sucesso")
-        retorno_esperado = Calcula_Pontuacao()
-        self.assertEqual(retorno_esperado,{0: pontosJogador})#Nao sei como passar pontosJogador
+        Destroi_Dados()
+        Destruir_Tab()
+        Destroi_Jogadores()
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,2)
+        Muda_Face(4,2)
+        Muda_Face(5,3)
+        idJogadorAtual = 1
+        nomePontuacao='Ones'
+        pontosJogador=2
+        retorno_esperado = Calcula_Pontuacao(Mostra_Dados()[0],nomePontuacao,idJogadorAtual)
+        self.assertEqual(retorno_esperado,{0: 2})
+
+    def testPontuacao_02_CalculaPontuacao_Ok_Condicao_Retorno_Twos(self): 
+        print("Caso de Teste Pontuacao 02 - Pontuacao calculada com sucesso")
+        Destroi_Dados()
+        Destruir_Tab()
+        Destroi_Jogadores()
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,2)
+        Muda_Face(4,2)
+        Muda_Face(5,3)
+        idJogadorAtual = 1
+        nomePontuacao='Twos'
+        pontosJogador=4
+        retorno_esperado = Calcula_Pontuacao(Mostra_Dados()[0],nomePontuacao,idJogadorAtual)
+        self.assertEqual(retorno_esperado,{0: 4})
         
-    #Inicio teste para calcular pontuacao caso as casas da coluna nao estejam devidamente preenchidas                     
-    def testPontuacao_02_CalculaPontuacao_Colunas_Nao_Preenchidas(self): 
-        print("Caso de Teste Pontuacao 02 - Casas da coluna nao estao devidamente preenchidas")
-        #Nao sei como fazer para dar esse erro
-        retorno_esperado = Calcula_Pontuacao()
-        self.assertEqual(retorno_esperado,{1: []})
+    def testPontuacao_03_CalculaPontuacao_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Pontuacao 03 - Pontuacao calculada com sucesso")
+        Destroi_Dados()
+        Destruir_Tab()
+        Destroi_Jogadores()
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,2)
+        Muda_Face(4,2)
+        Muda_Face(5,3)
+        idJogadorAtual = 1
+        nomePontuacao='Threes'
+        pontosJogador=3
+        retorno_esperado = Calcula_Pontuacao(Mostra_Dados()[0],nomePontuacao,idJogadorAtual)
+        self.assertEqual(retorno_esperado,{0: 3})
+
+    #Inicio teste para tipo da pontuacao caso o Dado nao seja um objeto Dado
+    def testPontuacao_04_CalculaPontuacao_Dado_Nao_Seja_Objeto_Dado(self): 
+        print("Caso de Teste Pontuacao 04 - Dado nao eh um objeto Dado")
+        Destroi_Dados()
+        Destruir_Tab()
+        Destroi_Jogadores()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        idJogadorAtual = 1
+        nomePontuacao='Threes'
+        pontosJogador=3
+        retorno_esperado = Calcula_Pontuacao(Destroi_Dados(),nomePontuacao,idJogadorAtual)
+        self.assertEqual(retorno_esperado,{3: None})
+    
+    #Inicio teste para calcula pontuacao caso idJogadorAtual nao seja um int  
+    def testPontuacao_05_CalculaPontuacao_idJogadorAtual_Nao_Seja_Int(self): 
+        print("Caso de Teste Pontuacao 05 - idJogadorAtual nao eh int")
+        Destroi_Dados()
+        Destruir_Tab()
+        Destroi_Jogadores()
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,2)
+        Muda_Face(4,2)
+        Muda_Face(5,3)
+        idJogadorAtual = []
+        nomePontuacao='Ones'
+        pontosJogador=2
+        retorno_esperado = Calcula_Pontuacao(Mostra_Dados()[0],nomePontuacao,idJogadorAtual)
+        self.assertEqual(retorno_esperado,{4: None})
+        
+    #Inicio teste para calcula pontuacao caso o parametro idJogadorAtual nao corresponda com nenhum dos jogadores presentes no jogo   
+    def testPontuacao_06_CalculaPontuacao_idJogadorAtual_Nao_Faz_Parte_De_Jogadores(self): 
+        print("Caso de Teste Pontuacao 06 - idJogadorAtual nao corresponde a nenhum jogador presente")
+        Destroi_Dados()
+        Destruir_Tab()
+        Destroi_Jogadores()
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,2)
+        Muda_Face(4,2)
+        Muda_Face(5,3)
+        idJogadorAtual = 3
+        nomePontuacao='Threes'
+        pontosJogador=3
+        retorno_esperado = Calcula_Pontuacao(Mostra_Dados()[0],nomePontuacao,idJogadorAtual)
+        self.assertEqual(retorno_esperado,{5:None})
+        
+    def testPontuacao_07_CalculaPontuacao_Pontuacao_Nao_Esta_Lista(self): 
+        print("Caso de Teste Pontuacao 07 - Pontuacao calculada com sucesso")
+        Destroi_Dados()
+        Destruir_Tab()
+        Destroi_Jogadores()
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,2)
+        Muda_Face(4,2)
+        Muda_Face(5,3)
+        idJogadorAtual = 1
+        nomePontuacao='Carol'
+        pontosJogador=3
+        retorno_esperado = Calcula_Pontuacao(Mostra_Dados()[0],nomePontuacao,idJogadorAtual)
+        self.assertEqual(retorno_esperado,{6:None})
 
 class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
     #Parametro: Dados, JogadorAtual
@@ -671,8 +767,8 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
         #{3: []} - Caso o parametro idJogadorAtual nao corresponda com nenhum dos jogadores presentes no jogo
 
     #Inicio teste para tipo da pontuacao com sucesso
-    def testPontuacao_03_TipoPontuacao_Ok_Condicao_Retorno_11223(self): 
-        print("Caso de Teste Pontuacao 03 - Sucesso caso os dados sejam 1 1 2 2 3")
+    def testPontuacao_08_TipoPontuacao_Ok_Condicao_Retorno_11223(self): 
+        print("Caso de Teste Pontuacao 08 - Sucesso caso os dados sejam 1 1 2 2 3")
         #Caso 1: 1 1 2 2 3
         Destroi_Dados()
         Destruir_Tab()
@@ -690,8 +786,8 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
         retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
         self.assertEqual(retorno_esperado,{0: ListaEsperada})
 
-    def testPontuacao_04_TipoPontuacao_Ok_Condicao_Retorno_44556(self): 
-        print("Caso de Teste Pontuacao 04 - Sucesso caso os dados sejam 4 4 5 5 6")
+    def testPontuacao_09_TipoPontuacao_Ok_Condicao_Retorno_44556(self): 
+        print("Caso de Teste Pontuacao 09 - Sucesso caso os dados sejam 4 4 5 5 6")
         #Caso 2: 4 4 5 5 6
         Destroi_Dados()
         Destruir_Tab()
@@ -709,8 +805,8 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
         retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
         self.assertEqual(retorno_esperado,{0: ListaEsperada})
 
-    def testPontuacao_05_TipoPontuacao_Ok_Condicao_Retorno_11234(self): 
-        print("Caso de Teste Pontuacao 05 - Sucesso caso os dados sejam 1 1 2 3 4")
+    def testPontuacao_10_TipoPontuacao_Ok_Condicao_Retorno_11234(self): 
+        print("Caso de Teste Pontuacao 10 - Sucesso caso os dados sejam 1 1 2 3 4")
         #Caso 3: 1 1 2 3 4
         Destroi_Dados()
         Destruir_Tab()
@@ -728,8 +824,8 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
         retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
         self.assertEqual(retorno_esperado,{0: ListaEsperada})
 
-    def testPontuacao_06_TipoPontuacao_Ok_Condicao_Retorno_11123(self): 
-        print("Caso de Teste Pontuacao 06 - Sucesso caso os dados sejam 1 1 1 2 3")
+    def testPontuacao_11_TipoPontuacao_Ok_Condicao_Retorno_11123(self): 
+        print("Caso de Teste Pontuacao 11 - Sucesso caso os dados sejam 1 1 1 2 3")
         #Caso 4: 1 1 1 2 3
         Destroi_Dados()
         Destruir_Tab()
@@ -747,13 +843,13 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
         retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
         self.assertEqual(retorno_esperado,{0: ListaEsperada})
 
-    def testPontuacao_07_TipoPontuacao_Ok_Condicao_Retorno_11112(self): 
-        print("Caso de Teste Pontuacao 07 - Sucesso caso os dados sejam 1 1 1 1 2")
+    def testPontuacao_12_TipoPontuacao_Ok_Condicao_Retorno_11112(self): 
+        print("Caso de Teste Pontuacao 12 - Sucesso caso os dados sejam 1 1 1 1 2")
         #Caso 5: 1 1 1 1 2
         Destroi_Dados()
         Destruir_Tab()
         Destroi_Jogadores()
-        ListaEsperada = ["Ones","Twos","Four of a Kind","Chance"]
+        ListaEsperada = ["Ones","Twos","Three of a Kind","Four of a Kind","Chance"]
         Cria_Dados()
         Cria_Tab()
         Cria_Novo_Jogador("Aiko")
@@ -766,13 +862,13 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
         retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
         self.assertEqual(retorno_esperado,{0: ListaEsperada})
 
-    def testPontuacao_08_TipoPontuacao_Ok_Condicao_Retorno_11111(self): 
-        print("Caso de Teste Pontuacao 08 - Sucesso caso os dados sejam 1 1 1 1 1")
+    def testPontuacao_13_TipoPontuacao_Ok_Condicao_Retorno_11111(self): 
+        print("Caso de Teste Pontuacao 13 - Sucesso caso os dados sejam 1 1 1 1 1")
         #Caso 6: 1 1 1 1 1
         Destroi_Dados()
         Destruir_Tab()
         Destroi_Jogadores()
-        ListaEsperada = ["Ones","Yahtzee","Chance"]
+        ListaEsperada = ["Ones","Three of a Kind","Four of a Kind","Yahtzee","Chance"]
         Cria_Dados()
         Cria_Tab()
         Cria_Novo_Jogador("Aiko")
@@ -785,13 +881,13 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
         retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
         self.assertEqual(retorno_esperado,{0: ListaEsperada})
 
-    def testPontuacao_09_TipoPontuacao_Ok_Condicao_Retorno_11222(self): 
-        print("Caso de Teste Pontuacao 09 - Sucesso caso os dados sejam 1 1 2 2 2")
+    def testPontuacao_14_TipoPontuacao_Ok_Condicao_Retorno_11222(self): 
+        print("Caso de Teste Pontuacao 14 - Sucesso caso os dados sejam 1 1 2 2 2")
         #Caso 7: 1 1 2 2 2
         Destroi_Dados()
         Destruir_Tab()
         Destroi_Jogadores()
-        ListaEsperada = ["Ones","Twos","Full House","Chance"]
+        ListaEsperada = ["Ones","Twos","Three of a Kind","Full House","Chance"]
         Cria_Dados()
         Cria_Tab()
         Cria_Novo_Jogador("Aiko")
@@ -804,8 +900,8 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
         retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
         self.assertEqual(retorno_esperado,{0: ListaEsperada})
 
-    def testPontuacao_10_TipoPontuacao_Ok_Condicao_Retorno_13456(self): 
-        print("Caso de Teste Pontuacao 10 - Sucesso caso os dados sejam 1 3 4 5 6")
+    def testPontuacao_15_TipoPontuacao_Ok_Condicao_Retorno_13456(self): 
+        print("Caso de Teste Pontuacao 15 - Sucesso caso os dados sejam 1 3 4 5 6")
         #Caso 8: 1 3 4 5 6
         Destroi_Dados()
         Destruir_Tab()
@@ -823,8 +919,8 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
         retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
         self.assertEqual(retorno_esperado,{0: ListaEsperada})
 
-    def testPontuacao_11_TipoPontuacao_Ok_Condicao_Retorno_12456(self): 
-        print("Caso de Teste Pontuacao 11 - Sucesso caso os dados sejam 1 2 4 5 6")
+    def testPontuacao_16_TipoPontuacao_Ok_Condicao_Retorno_12456(self): 
+        print("Caso de Teste Pontuacao 16 - Sucesso caso os dados sejam 1 2 4 5 6")
         #Caso 9: 1 2 4 5 6
         Destroi_Dados()
         Destruir_Tab()
@@ -842,8 +938,8 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
         retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
         self.assertEqual(retorno_esperado,{0: ListaEsperada})
 
-    def testPontuacao_12_TipoPontuacao_Ok_Condicao_Retorno_12345(self): 
-        print("Caso de Teste Pontuacao 12 - Sucesso caso os dados sejam 1 2 3 4 5")
+    def testPontuacao_17_TipoPontuacao_Ok_Condicao_Retorno_12345(self): 
+        print("Caso de Teste Pontuacao 17 - Sucesso caso os dados sejam 1 2 3 4 5")
         #Caso 10: 1 2 3 4 5
         Destroi_Dados()
         Destruir_Tab()
@@ -862,19 +958,19 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
         self.assertEqual(retorno_esperado,{0: ListaEsperada})
         
     #Inicio teste para tipo da pontuacao caso o Dado nao seja um objeto Dado
-    def testPontuacao_13_TipoPontuacao_Dado_Nao_Seja_Objeto_Dado(self): 
-        print("Caso de Teste Pontuacao 13 - Dado nao eh um objeto Dado")
+    def testPontuacao_18_TipoPontuacao_Dado_Nao_Seja_Objeto_Dado(self): 
+        print("Caso de Teste Pontuacao 18 - Dado nao eh um objeto Dado")
         Destroi_Dados()
         Destroi_Jogadores()
         Cria_Novo_Jogador("Aiko")
         Cria_Novo_Jogador("Carol")
         idJogadorAtual = 2
-        retorno_esperado = Tipo_Pontuacao(Dados,idJogadorAtual)
+        retorno_esperado = Tipo_Pontuacao(Destroi_Dados(),idJogadorAtual)
         self.assertEqual(retorno_esperado,{1: []})
     
     #Inicio teste para tipo da pontuacao caso idJogadorAtual nao seja um int  
-    def testPontuacao_14_TipoPontuacao_idJogadorAtual_Nao_Seja_Int(self): 
-        print("Caso de Teste Pontuacao 14 - idJogadorAtual nao eh int")
+    def testPontuacao_19_TipoPontuacao_idJogadorAtual_Nao_Seja_Int(self): 
+        print("Caso de Teste Pontuacao 19 - idJogadorAtual nao eh int")
         Destroi_Dados()
         Cria_Dados()
         Destroi_Jogadores()
@@ -886,17 +982,66 @@ class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
         self.assertEqual(retorno_esperado,{2: []})
         
     #Inicio teste para tipo da pontuacao caso o parametro idJogadorAtual nao corresponda com nenhum dos jogadores presentes no jogo   
-    def testPontuacao_15_TipoPontuacao_idJogadorAtual_Nao_Faz_Parte_De_Jogadores(self): 
-        print("Caso de Teste Pontuacao 15 - idJogadorAtual nao corresponde a nenhum jogador presente")
+    def testPontuacao_20_TipoPontuacao_idJogadorAtual_Nao_Faz_Parte_De_Jogadores(self): 
+        print("Caso de Teste Pontuacao 20 - idJogadorAtual nao corresponde a nenhum jogador presente")
         Destroi_Dados()
+        Destruir_Tab()
         Destroi_Jogadores()
-        Cria_Novo_Jogador("Aiko")
-        Cria_Novo_Jogador("Carol")
+        ListaEsperada = ["Ones","Twos","Threes","Fours","Fives","Small Straight","Large Straight","Chance"]
         Cria_Dados()
-        Dados = Jogar_Dados()
-        idJogadorAtual = 3
-        retorno_esperado = Tipo_Pontuacao(Dados,idJogadorAtual)
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,2)
+        Muda_Face(3,3)
+        Muda_Face(4,4)
+        Muda_Face(5,5)
+        idJogadorAtual = 6
+        retorno_esperado = Tipo_Pontuacao(Mostra_Dados()[0],idJogadorAtual)
         self.assertEqual(retorno_esperado,{3: []})
+
+class Teste_ModuloPontuacao_Pega_Faces(unittest.TestCase):
+    #Parametro: NULL
+    #Retornos possiveis:
+    #Retorna a lista de faces caso sucesso
+    #retorna {1:[]} caso o dado nao seja um objeto dado
+    
+    #Inicio teste para caso de sucesso retornando a lista
+
+    def testPontuacao_21_PegaFaces_Ok_Condicao_Retorno_Ones(self): 
+        print("Caso de Teste PegaFaces 21 - PegaFaces retornando a  lista com sucesso")
+        Destroi_Dados()
+        Destruir_Tab()
+        Destroi_Jogadores()
+        Cria_Dados()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        Muda_Face(1,1)
+        Muda_Face(2,1)
+        Muda_Face(3,2)
+        Muda_Face(4,2)
+        Muda_Face(5,3)
+        #lista esperada=[1, 1, 2, 2, 3]
+        idJogadorAtual = 1
+        nomePontuacao='Ones'
+        pontosJogador=2
+        retorno_esperado = Pega_Faces(Mostra_Dados()[0])
+        self.assertEqual(retorno_esperado,[1, 1, 2, 2, 3])
+
+    #Inicio teste para pega_Faces caso o Dado nao seja um objeto Dado
+    def testPontuacao_22_Pega_Faces_Dado_Nao_Seja_Objeto_Dado(self): 
+        print("Caso de Teste Pega_Faces 22 - Dado nao eh um objeto Dado")
+        Destroi_Dados()
+        Destruir_Tab()
+        Destroi_Jogadores()
+        Cria_Tab()
+        Cria_Novo_Jogador("Aiko")
+        idJogadorAtual = 1
+        nomePontuacao='Threes'
+        pontosJogador=3
+        retorno_esperado = Pega_Faces(Destroi_Dados())
+        self.assertEqual(retorno_esperado,{1: []})
+    
 
 class Teste_ModuloTabuleiro_CriaTab(unittest.TestCase):
     #Parametro: NULL

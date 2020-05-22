@@ -11,8 +11,8 @@ jogadores = []
 #exemplo: {01: Aiko}, {02: Carol}, {03: Carlos}.
 
 
-#Recebe o nome do jogador por parametro e cadastra na lista de jogadores.
-#Parametros: nomeJogador
+#Recebe o nome do jogador por parâmetro e cadastra na lista de jogadores.
+#Paramêtros: nomeJogador
 #retorna 0 caso o jogador tenha sido criado corretamente
 #retorna 1 caso ja existam 2 jogadores(limite maximo)
 #retorna 2 caso o nome nao tenha sido passado corretamente
@@ -28,7 +28,7 @@ def Cria_Novo_Jogador(nomeJogador):
 
 
 #Funcao que retorna a lista dos jogadores.
-#Parametros: None
+#Paramêtros: None
 #Retorna {0: [Jogador1, Jogador2]} caso obtido sucesso
 #Retorna {1: []} caso falte um jogador a ser cadastrado
 #retorna {2: []} caso faltem dois jogadores para serem cadastrados
@@ -41,7 +41,7 @@ def Pega_Jogadores():
     return {2: []}
 
 #funcao que esvazia a lista de jogadores
-#Parametros: None
+#Paramêtros: None
 #retorna 0 caso sucesso
 #retorna 1 caso a lista ja esteja vazia
 def Destroi_Jogadores():

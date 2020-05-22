@@ -3,7 +3,7 @@
 import Dados
 import Rodada
 import Jogador
-__all__ = ["Cria_Novo_Jogo", "Verifica_Rodada", "Atualiza_JogadorAtual", "Destruir_Jogo"]
+__all__ = ["Cria_Novo_Jogo", "Verifica_Rodada", "Atualiza_JogadorAtual"]
 jogo=[]
 
 #Descrição: Cria um novo objeto jogo. Retorna 0 se conseguiu criar o objeto Jogo corretamente, caso já tenha objeto Jogo criado, retorna 1.
