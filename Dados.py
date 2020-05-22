@@ -1,7 +1,7 @@
-#Versao 1.0.9
-#Ultima modificacao: Aiko Ramalho
+#Versao 1.0.10
+#Ultima modificacao: Carlos Ribeiro
 import random
-__all__ = ["Cria_Dados", "Muda_Status", "Mostra_Dados", "Destroi_Dados", "Jogar_Dados"]
+__all__ = ["Cria_Dados", "Muda_Status", "Mostra_Dados", "Destroi_Dados", "Jogar_Dados", "Muda_Face"]
 
 dados = []
 #Modulo que implementa a criacao dos Dados,o ato de jogar os dados,
@@ -12,11 +12,11 @@ dados = []
 #aquele dado especifico naquela arremesso.Exemplo de objeto Dado: {01: {congelado: False, face: 6}}.
 
 #Funcao que cria uma lista de cinco objetos dados. 
-#No caso de dessa função, cada objeto Dado criado terá seu valor “face” igual a zero, 
-#pois ainda não foi arremessado por algum jogador, seu valor “congelado”, portanto, será False
+#No caso de dessa funçao, cada objeto Dado criado tera seu valor “face” igual a zero, 
+#pois ainda nao foi arremessado por algum jogador, seu valor “congelado”, portanto, sera False
 #Parametro: NULL
 #retorna 0 caso de sucesso
-#retorna 1 caso ja exista dado criado (tentativa de recriação)
+#retorna 1 caso ja exista dado criado (tentativa de recriaçao)
 def Cria_Dados():
     qtdDados = len(dados)
     if(qtdDados == 5):
@@ -30,7 +30,7 @@ def Cria_Dados():
 #Parametro:ID (id do dado criado para identificacao)
 #retorna 0 quando sucesso na mudanca de estado
 #retorna 1 caso esse id nao tenha dado correspondente
-#retorna 2 caso o tipo de paramentro passado nao seja int
+#retorna 2 caso o tipo de parametro passado nao seja int
 #retorna 3 caso a lista de objetos Dado seja vazia(ainda nao criados)
 def Muda_Status(id):
     if(type(id) != type(0)):
@@ -76,7 +76,7 @@ def Jogar_Dados():
 
 #Funcao que retorna um dicionario contendo um codigo como chave
 #e uma lista de objetos dado
-#Parâmetros: None
+#Parametros: None
 #codigo tem valor 0 quando sucesso
 #valor 1 caso nao hajam dados criados
 #valor 2 caso os dados ainda nao tenhma sido arremessados
@@ -88,8 +88,30 @@ def Mostra_Dados():
         return {2: []}
     return {0: dados}
 
+#Carlos aqui: adicionei Muda_Face so pra testar a tipo_pontuacao
+#Funcao que altera a face de um dado especifico
+#Parametros: idDado, numFace
+#retorna 0 caso sucesso
+#retorna 1 caso idDado nao seja int
+#retorna 2 caso id dado nao corresponda a nenhum dos dados
+#retorna 3 caso numFace nao seja int
+#retorna 4 caso o numFace seja diferente de 1, 2, 3, 4, 5 ou 6
+def Muda_Face(idDado,numFace):
+    
+    if type(idDado) != int:
+        return 1
+    if idDado > 5 or idDado < 1:
+        return 2
+    if type(numFace) != int:
+        return 3
+    if numFace < 1 or numFace > 6:
+        return 4
+
+    dados[idDado-1][idDado]["face"] = numFace
+    return 0
+
 #funcao auxiliar para destruir os dados
-#Paramêtros: None
+#Parametros: None
 #retorna 0 caso sucesso
 #retorna 1 caso a lista ja esteja vazia
 def Destroi_Dados():

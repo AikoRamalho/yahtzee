@@ -4,7 +4,9 @@
 from collections import defaultdict
 import Dados, Tabuleiro
 
-__all__ = ["Calcula_Pontuacao", "Tipo_Pontuacao","Verifica_Pont_Preenchida","Atribui_Repetidos","Pega_Faces","Destroi_Pontuacao"]
+__all__ = ["Calcula_Pontuacao", "Tipo_Pontuacao"]
+
+
 
 #Modulo no qual computamos a pontuacao de cada jogador a partir dos
 #dados gerados e fazemos o calculo baseado na sua pontuacao
@@ -16,16 +18,23 @@ __all__ = ["Calcula_Pontuacao", "Tipo_Pontuacao","Verifica_Pont_Preenchida","Atr
 #retorna {2: None} Caso o nomePontuacao nao esteja presente
 #na lista de pontuacoes possiveis
 def Calcula_Pontuacao(dados, nomePontuacao, idJogadorAtual):
-    listaPont = Tipo_Pontuacao(dados,idJogadorAtual)[0]
+    retorno_mostra_dados=Dados.Mostra_Dados()
     faces = Pega_Faces(dados)
     pont = 0 #pontuacao a ser calculada
-
-    if type(nomePontuacao) != str:
-        return {1: None}
-
-    if nomePontuacao in listaPont == False:
-        return {2: None}
+    if(type(dados)==list):
+        if dados[0]!= retorno_mostra_dados[0][0]:
+            return {3:None}
+    else:
+        if type(dados)!= type(retorno_mostra_dados):
+            return {3:None}
+    if type(idJogadorAtual) != int:
+        return {4: None}
     
+    if idJogadorAtual != 1 and idJogadorAtual != 2:
+        return {5: None}
+    listaPont = Tipo_Pontuacao(dados,idJogadorAtual)[0]
+    if (nomePontuacao in listaPont)==False:
+        return {6: None}
     if nomePontuacao == "Ones":
         for i in faces:
             if i == 1:
@@ -42,7 +51,7 @@ def Calcula_Pontuacao(dados, nomePontuacao, idJogadorAtual):
         for i in faces:
             if i == 4:
                 pont = pont + 4 #A cada dado com valor 4, soma-se 4.
-    elif nomePontuacao == "Five":
+    elif nomePontuacao == "Fives":
         for i in faces:
             if i == 5:
                 pont = pont + 5 #A cada dado com valor 5, soma-se 5.
@@ -90,11 +99,14 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
     listaPont = []
     repetidos = {}
     retorno_mostra_dados=Dados.Mostra_Dados()
-
-    if type(dados) != type(retorno_mostra_dados):
-        return {1: []}
     if type(idJogadorAtual) != int:
         return {2: []}
+    if(type(dados)==list):
+        if dados[0]!= retorno_mostra_dados[0][0]:
+            return {1:[]}
+    else:
+        if type(dados)!= type(retorno_mostra_dados):
+            return {1:[]}
     if idJogadorAtual != 1 and idJogadorAtual != 2:
         return {3: []}
     
@@ -134,7 +146,7 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
         elif achado == 1:   #Para poder verificar os repetidos
             listaAux.append(pont)
         
-        print(face)
+        #print(face)
 
     Atribui_Repetidos(listaAux,repetidos)
     qtdRepetidos = len(repetidos)
@@ -152,8 +164,8 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
                         facesDadosR.append(face)
                 ordenadosR = sorted(facesDadosR)
                 numLista = len(ordenadosR)
-                for i in ordenadosR:
-                    print("Num: ",i)
+                #for i in ordenadosR:
+                    #print("Num: ",i)
                 x=1
                 while(x<numLista):
                     
@@ -162,7 +174,7 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
                     sub = elemAtual-elemPass
                     if sub == 1:
                         cont=cont+1
-                    print("x: ",x)
+                    #print("x: ",x)
                     x=x+1
                 if cont == 3:
                     pont = "Small Straight"
@@ -186,6 +198,7 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
                 listaPont.append(pont)
                    
     elif qtdRepetidos == 2:     #Caso tenham dois repetidos
+        achado = 0
         #Unico jeito de dar full house
         for i in repetidos:
             qtdRepeticoes = len(repetidos[i])
@@ -204,7 +217,6 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
             ver = Verifica_Pont_Preenchida(pont, idJogadorAtual)
             if ver == 1:
                 achado = 2
-            
             if achado == 0:
                 listaPont.append(pont)
                 
@@ -220,23 +232,25 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
             facesDados.append(face)
         ordenados = sorted(facesDados)
         numLista = len(ordenados)
-        print("NumLista: ",numLista)
+        #print("NumLista: ",numLista)
         x=1
         while(x<numLista):
             elemAtual = ordenados[x]
             elemPass = ordenados[x-1]
-            print("elemAtual: ",elemAtual)
-            print("elemPass: ",elemPass)
+            #print("elemAtual: ",elemAtual)
+            #print("elemPass: ",elemPass)
             sub = elemAtual-elemPass
-            print("sub: ",sub)
+            #print("sub: ",sub)
             if sub == 1:
                 cont=cont+1
+            if cont == 1 and sub == 2:
+                break
             if cont == 3:
                 pont = "Small Straight"
             elif cont == 4:
                 pont = "Large Straight"
             x=x+1
-        print("cont: ",cont)
+        #print("cont: ",cont)
         #Para verificar que a casa nao esta preenchida
         ver = Verifica_Pont_Preenchida(pont, idJogadorAtual)
         if ver == 1:
@@ -259,6 +273,9 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
     ver = Verifica_Pont_Preenchida("Chance",idJogadorAtual)
     if ver == 0:
         listaPont.append("Chance")
+
+    #for j in listaPont:
+    #    print(j)
     
     return {0: listaPont}
 
@@ -286,7 +303,18 @@ def Atribui_Repetidos(lista, repetidos):
 
     return 0
 
+#Modulo que pega as faces do dado
+#Parametro: o objeto dados
+#Retorna a lista de faces caso sucesso
+#retorna {1:[]} caso o dado nao seja um objeto dado
 def Pega_Faces(dados):
+    retorno_mostra_dados=Dados.Mostra_Dados()
+    if(type(dados)==list):
+        if dados[0]!= retorno_mostra_dados[0][0]:
+            return {1:[]}
+    else:
+        if type(dados)!= type(retorno_mostra_dados):
+            return {1:[]}
     listFaces = []
     k=0
     for i in dados:
@@ -295,18 +323,4 @@ def Pega_Faces(dados):
 
     return listFaces
 
-def Destroi_Pontuacao():
-    retorno_pega_faces=Pega_Faces(dados)
-    if(len(retorno_pega_faces)==0):
-        return 0
-
-Dados.Cria_Dados()
-Tabuleiro.Cria_Tab()
-Dados.Jogar_Dados()
-x = Dados.Mostra_Dados()
-dados = x[0]
-listaPont=Tipo_Pontuacao(dados,1)[0]
-for i in listaPont:
-    print(i)
-Calcula_Pontuacao(dados,"Three of a Kind", 1)
 
