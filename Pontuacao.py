@@ -17,10 +17,16 @@ __all__ = ["Calcula_Pontuacao", "Tipo_Pontuacao", "Pega_Faces"]
 #retorna {1: None} Caso nomePontuacao nao seja string
 #retorna {2: None} Caso o nomePontuacao nao esteja presente
 #na lista de pontuacoes possiveis
+#retorna {3:None} Caso o dado nao seja objeto dado
+#retorna {4:None} Caso o idjogador nao seja int
+#retorna {5:None} Caso o id jogador nao faca parte de jogadores
+
 def Calcula_Pontuacao(dados, nomePontuacao, idJogadorAtual):
     retorno_mostra_dados=Dados.Mostra_Dados()
     faces = Pega_Faces(dados)
+    listaPont = Tipo_Pontuacao(dados,idJogadorAtual)[0]
     pont = 0 #pontuacao a ser calculada
+    
     if(type(dados)==list):
         if dados[0]!= retorno_mostra_dados[0][0]:
             return {3:None}
@@ -32,50 +38,87 @@ def Calcula_Pontuacao(dados, nomePontuacao, idJogadorAtual):
     
     if idJogadorAtual != 1 and idJogadorAtual != 2:
         return {5: None}
-    listaPont = Tipo_Pontuacao(dados,idJogadorAtual)[0]
-    if (nomePontuacao in listaPont)==False:
-        return {6: None}
+    
     if nomePontuacao == "Ones":
-        for i in faces:
-            if i == 1:
-                pont = pont + 1 #A cada dado com valor 1, soma-se 1.
+        if "Ones" in listaPont:
+            for i in faces:
+                if i == 1:
+                    pont = pont + 1 #A cada dado com valor 1, soma-se 1.
+        else:
+            pont = 0
     elif nomePontuacao == "Twos":
-        for i in faces:
-            if i == 2:
-                pont = pont + 2 #A cada dado com valor 2, soma-se 2.
+        if "Twos" in listaPont:
+            for i in faces:
+                if i == 2:
+                    pont = pont + 2 #A cada dado com valor 2, soma-se 2.
+        else:
+            pont = 0
     elif nomePontuacao == "Threes":
-        for i in faces:
-            if i == 3:
-                pont = pont + 3 #A cada dado com valor 3, soma-se 3.
+        if "Threes" in listaPont:
+            for i in faces:
+                if i == 3:
+                    pont = pont + 3 #A cada dado com valor 3, soma-se 3.
+        else:
+            pont = 0
     elif nomePontuacao == "Fours":
-        for i in faces:
-            if i == 4:
-                pont = pont + 4 #A cada dado com valor 4, soma-se 4.
+        if "Fours" in listaPont:
+            for i in faces:
+                if i == 4:
+                    pont = pont + 4 #A cada dado com valor 4, soma-se 4.
+        else:
+            pont = 0
     elif nomePontuacao == "Fives":
-        for i in faces:
-            if i == 5:
-                pont = pont + 5 #A cada dado com valor 5, soma-se 5.
+        if "Fives" in listaPont:
+            for i in faces:
+                if i == 5:
+                    pont = pont + 5 #A cada dado com valor 5, soma-se 5.
+        else:
+            pont = 0
     elif nomePontuacao == "Sixes":
-        for i in faces:
-            if i == 6:
-                pont = pont + 6 #A cada dado com valor 6, soma-se 6.
+        if "Sixes" in listaPont:
+            for i in faces:
+                if i == 6:
+                    pont = pont + 6 #A cada dado com valor 6, soma-se 6.
+        else:
+            pont = 0
     elif nomePontuacao == "Three of a Kind":
-        for i in faces:
-            pont = pont + i #Caso 3 dados tenham valores iguais, soma-se todos os dados.
+        if "Three of a Kind" in listaPont:
+            for i in faces:
+                pont = pont + i #Caso 3 dados tenham valores iguais, soma-se todos os dados.
+        else:
+            pont = 0
     elif nomePontuacao == "Four of a Kind":
-        for i in faces:
-            pont = pont + i #Caso 4 dados tenham valores iguais, soma-se todos os dados.
+        if "Four of a Kind" in listaPont:
+            for i in faces:
+                pont = pont + i #Caso 4 dados tenham valores iguais, soma-se todos os dados.
+        else:
+            pont = 0
     elif nomePontuacao == "Full House":
-        pont = 25 #Caso 3 dados tenham valores iguais e os outros 2 tenham outros valores iguais, pontua 25.
+        if "Full House" in listaPont:
+            pont = 25 #Caso 3 dados tenham valores iguais e os outros 2 tenham outros valores iguais, pontua 25.
+        else:
+            pont = 0
     elif nomePontuacao == "Small Straight":
-        pont = 30 #Caso 4 dados formem um sequencia numerica, pontua 30.
+        if "Small Straight" in listaPont:
+            pont = 30 #Caso 4 dados formem um sequencia numerica, pontua 30.
+        else:
+            pont = 0
     elif nomePontuacao == "Large Straight":
-        pont = 40 #Caso 5 dados formem uma sequencia numerica, pontua 40.
+        if "Large Straight" in listaPont:
+            pont = 40 #Caso 5 dados formem uma sequencia numerica, pontua 40.
+        else:
+            pont = 0
     elif nomePontuacao == "Chance":
-        for i in faces:
-            pont = pont + i #Pode se usar a qualquer momento, soma-se todos os dados.
+        if "Chance" in listaPont:
+            for i in faces:
+                pont = pont + i #Pode se usar a qualquer momento, soma-se todos os dados.
+        else:
+            pont = 0
     elif nomePontuacao == "Yahtzee":
-        pont = 50 #Caso 6 dados tenham valores iguais, pontua 50.   
+        if "Yahtzee" in listaPont:
+            pont = 50 #Caso 6 dados tenham valores iguais, pontua 50.
+        else:
+            pont = 0
     
     return {0: pont}
 
@@ -331,7 +374,7 @@ def Verifica_Pont_Preenchida(tipoPontuacao,idJogadorAtual):
         if tipoPontuacao == i:
             linha = pontuacao_AUX[i]
             pontuacao = tabuleiro[linha]
-            if pontuacao[idJogadorAtual] != None:
+            if pontuacao[idJogadorAtual-1] != None:
                 return 1 #Pontuacao Preenchida
         
     return 0
@@ -376,6 +419,7 @@ def Pega_Faces(dados):
 #Dados.Muda_Face(4,2)
 #Dados.Muda_Face(5,2)
 #dados = Dados.Mostra_Dados()[0]
+#Calcula_Pontuacao(dados,"Threes",1)
 #listaPont = Tipo_Pontuacao(dados, 1)[0]
 #for i in listaPont:
 #    print(i)

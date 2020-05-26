@@ -29,10 +29,54 @@ def Tela_Inicial():
     return {None}
 
 def Insere(dados,nomePontuacao,idJogador):
+    global button_Ones
+    global button_Twos
+    global button_Threes
+    global button_Fours
+    global button_Fives
+    global button_Sixes
     pontuacao_atual = Pontuacao.Calcula_Pontuacao(dados,nomePontuacao, idJogador)[0]
     Tabuleiro.InserirPontuacao(pontuacao_atual, idJogador, nomePontuacao)
+    i=1
 
+    #Para nao aparecer novamente disponivel apos insercao de pontuacao
+    button_Ones.grid_forget()
+    button_Ones = Button(root, text="Ones",padx = 20,pady =10, command=Tabuleiro.InserirPontuacao, state=DISABLED)
+    button_Ones.grid(row=2,column=0,sticky=W+E)
+
+    button_Twos.grid_forget()
+    button_Twos = Button(root, text="Twos",padx = 20,pady =10, command=Tabuleiro.InserirPontuacao, state=DISABLED)
+    button_Twos.grid(row=3,column=0,sticky=W+E)
+
+    button_Threes.grid_forget()
+    button_Threes = Button(root, text="Threes",padx = 20,pady =10, command=Tabuleiro.InserirPontuacao, state=DISABLED)
+    button_Threes.grid(row=4,column=0,sticky=W+E)
+
+    button_Fours.grid_forget()
+    button_Fours = Button(root, text="Fours",padx = 20,pady =10, command=Tabuleiro.InserirPontuacao, state=DISABLED)
+    button_Fours.grid(row=5,column=0,sticky=W+E)
+
+    button_Fives.grid_forget()
+    button_Fives = Button(root, text="Fives",padx = 20,pady =10, command=Tabuleiro.InserirPontuacao, state=DISABLED)
+    button_Fives.grid(row=6,column=0,sticky=W+E)
+
+    button_Sixes.grid_forget()
+    button_Sixes = Button(root, text="Sixes",padx = 20,pady =10, command=Tabuleiro.InserirPontuacao, state=DISABLED)
+    button_Sixes.grid(row=7,column=0,sticky=W+E)
+
+    if idJogador == 1:
+        idJogador = 2
+    elif idJogador == 2:
+        idJogador = 1
+    
     Desenha_Tab(dados,idJogador)
+    
+    for dado in dados: #loop para mudar o status dos dados congelados apos insercao de pontuacao
+        if dado[i]["congelado"] == True:
+            Dados.Muda_Status(i)
+        i=i+1
+
+    
 
     return
 
@@ -43,7 +87,7 @@ def Pontuacoes_Disponiveis(dados,idJogadorAtual):
     global button_Fours
     global button_Fives
     global button_Sixes
-    listaPont = Pontuacao.Tipo_Pontuacao(dados,1)[0]
+    listaPont = Pontuacao.Tipo_Pontuacao(dados,idJogadorAtual)[0]
     
     #Para nao aparecer novamente caso nao escolha nenhuma pontuacao
     button_Ones.grid_forget()
@@ -70,30 +114,37 @@ def Pontuacoes_Disponiveis(dados,idJogadorAtual):
     button_Sixes = Button(root, text="Sixes",padx = 20,pady =10, command=Tabuleiro.InserirPontuacao, state=DISABLED)
     button_Sixes.grid(row=7,column=0,sticky=W+E)
 
-    for pont in listaPont:       
-        if pont == "Ones":
-            button_Ones = Button(root, text="Ones",padx = 20,pady =10, command=lambda: Insere(dados,"Ones",1))
-            button_Ones.grid(row=2,column=0,sticky=W+E)
-        elif pont == "Twos":
-            button_Twos = Button(root, text="Twos",padx = 20,pady =10, command=lambda: Insere(dados,"Twos",1))
-            button_Twos.grid(row=3,column=0,sticky=W+E)
-        elif pont == "Threes":
-            button_Threes = Button(root, text="Threes",padx = 20,pady =10, command=lambda: Insere(dados,"Threes",1))
-            button_Threes.grid(row=4,column=0,sticky=W+E)
-        elif pont == "Fours":
-            button_Fours = Button(root, text="Fours",padx = 20,pady =10, command=lambda: Insere(dados,"Fours",1))
-            button_Fours.grid(row=5,column=0,sticky=W+E)
-        elif pont == "Fives":
-            button_Fives = Button(root, text="Fives",padx = 20,pady =10, command=lambda: Insere(dados,"Fives",1))
-            button_Fives.grid(row=6,column=0,sticky=W+E)
-        elif pont == "Sixes":
-            button_Sixes = Button(root, text="Sixes",padx = 20,pady =10, command=lambda: Insere(dados,"Sixes",1))
-            button_Sixes.grid(row=7,column=0,sticky=W+E)
-
+        #i[idJogadorAtual-1]
+        #print(i[idJogadorAtual-1])
+    
+    if tabuleiro[0][idJogadorAtual-1] == None:
+        button_Ones = Button(root, text="Ones",padx = 20,pady =10, command=lambda: Insere(dados,"Ones",idJogadorAtual))
+        button_Ones.grid(row=2,column=0,sticky=W+E)
+    if tabuleiro[1][idJogadorAtual-1] == None:
+        button_Twos = Button(root, text="Twos",padx = 20,pady =10, command=lambda: Insere(dados,"Twos",idJogadorAtual))
+        button_Twos.grid(row=3,column=0,sticky=W+E)
+    if tabuleiro[2][idJogadorAtual-1] == None:
+        button_Threes = Button(root, text="Threes",padx = 20,pady =10, command=lambda: Insere(dados,"Threes",idJogadorAtual))
+        button_Threes.grid(row=4,column=0,sticky=W+E)
+    if tabuleiro[3][idJogadorAtual-1] == None:
+        button_Fours = Button(root, text="Fours",padx = 20,pady =10, command=lambda: Insere(dados,"Fours",idJogadorAtual))
+        button_Fours.grid(row=5,column=0,sticky=W+E)
+    if tabuleiro[4][idJogadorAtual-1] == None:
+        button_Fives = Button(root, text="Fives",padx = 20,pady =10, command=lambda: Insere(dados,"Fives",idJogadorAtual))
+        button_Fives.grid(row=6,column=0,sticky=W+E)
+    if tabuleiro[5][idJogadorAtual-1] == None:
+        button_Sixes = Button(root, text="Sixes",padx = 20,pady =10, command=lambda: Insere(dados,"Sixes",idJogadorAtual))
+        button_Sixes.grid(row=7,column=0,sticky=W+E)
 
     return
 
 def Desenha_Dados(dados,idJogadorAtual):
+    global button_Ones
+    global button_Twos
+    global button_Threes
+    global button_Fours
+    global button_Fives
+    global button_Sixes
     Dados.Jogar_Dados()
     dados = Dados.Mostra_Dados()[0]
     Pontuacoes_Disponiveis(dados,idJogadorAtual)

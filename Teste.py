@@ -623,6 +623,10 @@ class Teste_ModuloPontuacao_CalculaPontuacao(unittest.TestCase):
     #Retornos possiveis: {0: PontosJogador}, {1: []}
         #{0: Jogador_Atual} - Sucesso
         #{1: []} - Caso as casas da coluna nao esteja devidamente preenchidas
+        #{2: None} - Caso as casas da coluna não esteja devidamente preenchidas.
+        #{3:None} Caso o dado nao seja objeto dado
+        #{4:None} Caso o idjogador nao seja int
+        #{5:None} Caso o id jogador nao faca parte de jogadores
         
     #Inicio teste para calcular pontuacao com sucesso
 
@@ -736,25 +740,6 @@ class Teste_ModuloPontuacao_CalculaPontuacao(unittest.TestCase):
         pontosJogador=3
         retorno_esperado = Calcula_Pontuacao(Mostra_Dados()[0],nomePontuacao,idJogadorAtual)
         self.assertEqual(retorno_esperado,{5:None})
-        
-    def testPontuacao_07_CalculaPontuacao_Pontuacao_Nao_Esta_Lista(self): 
-        print("Caso de Teste Pontuacao 07 - Pontuacao calculada com sucesso")
-        Destroi_Dados()
-        Destruir_Tab()
-        Destroi_Jogadores()
-        Cria_Dados()
-        Cria_Tab()
-        Cria_Novo_Jogador("Aiko")
-        Muda_Face(1,1)
-        Muda_Face(2,1)
-        Muda_Face(3,2)
-        Muda_Face(4,2)
-        Muda_Face(5,3)
-        idJogadorAtual = 1
-        nomePontuacao='Carol'
-        pontosJogador=3
-        retorno_esperado = Calcula_Pontuacao(Mostra_Dados()[0],nomePontuacao,idJogadorAtual)
-        self.assertEqual(retorno_esperado,{6:None})
 
 class Teste_ModuloPontuacao_TipoPontuacao(unittest.TestCase):
     #Parametro: Dados, JogadorAtual
