@@ -1,4 +1,4 @@
-#Versao 1.8.5
+#Versao 1.8.6
 #Ultima modificacao: Carlos Ribeiro da Rocha
 
 import unittest
@@ -1098,6 +1098,7 @@ class Teste_ModuloTabuleiro_InserirPontuacao(unittest.TestCase):
         #3 - Caso tipoPontucao nao seja string.
         #4 - Caso o parametro jogadorAtual nao corresponda com nenhum dos jogadores presentes no jogo
         #5 - Caso tipoPontuacao nao corresponda com nenhum tipo de pontuacao
+        #6 - Caso a casa ja esteja preenchida
     
     #Inicio teste para inserir pontuacao com sucesso    
     def testTabuleiro_05_InserirPontuacao_Ok_Condicao_Retorno(self): 
@@ -1181,7 +1182,21 @@ class Teste_ModuloTabuleiro_InserirPontuacao(unittest.TestCase):
         pontuacao_atual = 20
         tipoPontuacao = "Six" #Deveria ser 'Sixes'
         retorno_esperado = InserirPontuacao(pontuacao_atual, idJogadorAtual,tipoPontuacao)
-        self.assertEqual(retorno_esperado,5)        
+        self.assertEqual(retorno_esperado,5)
+
+    def testTabuleiro_11_InserirPontuacao_Ok_Casa_Ja_Preenchida(self): 
+        print("Caso de Teste Tabuleiro 11 - Insercao caso casa ja esteja preenchida")
+        Destruir_Tab()
+        Destroi_Jogadores()
+        Cria_Tab()
+        Cria_Novo_Jogador("Carlos")
+        Cria_Novo_Jogador("Aiko")
+        idJogadorAtual = 1
+        pontuacao_atual = 20
+        tipoPontuacao = "Fours"
+        InserirPontuacao(pontuacao_atual,idJogadorAtual,tipoPontuacao)
+        retorno_esperado = InserirPontuacao(pontuacao_atual, idJogadorAtual, tipoPontuacao)
+        self.assertEqual(retorno_esperado,6)
         
 
 class Teste_ModuloTabuleiro_VerificaVencedor(unittest.TestCase):
@@ -1193,8 +1208,8 @@ class Teste_ModuloTabuleiro_VerificaVencedor(unittest.TestCase):
         #{3: None} - Caso o tabuleiro nao esteja completo.
 
     #Inicio teste para verificacao do vencedor com sucesso
-    def testTabuleiro_11_VerificaVencedor_Ok_Condicao_Retorno(self): 
-        print("Caso de Teste Tabuleiro 11 - Verificacao feita com sucesso")
+    def testTabuleiro_12_VerificaVencedor_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Tabuleiro 12 - Verificacao feita com sucesso")
         Destruir_Tab()
         Destroi_Jogadores()
         Cria_Tab()
@@ -1308,22 +1323,22 @@ class Teste_ModuloTabuleiro_VerificaVencedor(unittest.TestCase):
         self.assertEqual(retorno_esperado,{0: 1})
 
     #Inicio teste para verificacao do vencedor caso o tabuleiro esteja vazio
-    def testTabuleiro_12_VerificaVencedor_Tabuleiro_Vazio_Condicao_Retorno(self): 
-        print("Caso de Teste Tabuleiro 12 - o tabuleiro esta vazio")
+    def testTabuleiro_13_VerificaVencedor_Tabuleiro_Vazio_Condicao_Retorno(self): 
+        print("Caso de Teste Tabuleiro 13 - o tabuleiro esta vazio")
         Destruir_Tab()
         Cria_Tab()
         retorno_esperado = Verifica_Vencedor()
         self.assertEqual(retorno_esperado,{1: None})
 
     #Inicio teste para verificacao do vencedor caso nao haja tabuleiro criado
-    def testTabuleiro_13_VerificaVencedor_Nao_Existe_Tab_Condicao_Retorno(self): 
-        print("Caso de Teste Tabuleiro 13 - nao ha tabuleiro criado")
+    def testTabuleiro_14_VerificaVencedor_Nao_Existe_Tab_Condicao_Retorno(self): 
+        print("Caso de Teste Tabuleiro 14 - nao ha tabuleiro criado")
         Destruir_Tab()
         retorno_esperado = Verifica_Vencedor()
         self.assertEqual(retorno_esperado,{2: None})
 
-    def testTabuleiro_14_VerificaVencedor_Tabuleiro_Nao_Completo(self): 
-        print("Caso de Teste Tabuleiro 14 - tabuleiro nao esta completo")
+    def testTabuleiro_15_VerificaVencedor_Tabuleiro_Nao_Completo(self): 
+        print("Caso de Teste Tabuleiro 15 - tabuleiro nao esta completo")
         Destruir_Tab()
         Destroi_Jogadores()
         Cria_Tab()
@@ -1347,8 +1362,8 @@ class Teste_ModuloTabuleiro_Pega_Tabuleiro(unittest.TestCase):
         #{1: []} - Caso nao haja tabuleiro
 
     #Inicio teste para pegar tabuleiro com sucesso
-    def testTabuleiro_15_Pega_Tabuleiro_Ok_Condicao_Retorno(self): 
-        print("Caso de Teste Tabuleiro 15 - Tabuleiro pego com sucesso")
+    def testTabuleiro_16_Pega_Tabuleiro_Ok_Condicao_Retorno(self): 
+        print("Caso de Teste Tabuleiro 16 - Tabuleiro pego com sucesso")
         Destruir_Tab()
         Cria_Tab()
         tabuleiro = [[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None]]
@@ -1356,8 +1371,8 @@ class Teste_ModuloTabuleiro_Pega_Tabuleiro(unittest.TestCase):
         self.assertEqual(retorno_esperado,{0: tabuleiro})
 
     #Inicio teste para pegar tabuleiro caso nao haja tabuleiro
-    def testTabuleiro_16_Pega_Tabuleiro_Nao_ha_Tabuleiro(self):
-        print("Caso de Teste Tabuleiro 16 - Nao ha Tabuleiro a ser pego")
+    def testTabuleiro_17_Pega_Tabuleiro_Nao_ha_Tabuleiro(self):
+        print("Caso de Teste Tabuleiro 17 - Nao ha Tabuleiro a ser pego")
         Destruir_Tab()
         retorno_esperado = Pega_Tabuleiro()
         self.assertEqual(retorno_esperado,{1: []})

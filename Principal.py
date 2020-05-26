@@ -32,11 +32,11 @@ def Insere(dados,nomePontuacao,idJogador):
     pontuacao_atual = Pontuacao.Calcula_Pontuacao(dados,nomePontuacao, idJogador)[0]
     Tabuleiro.InserirPontuacao(pontuacao_atual, idJogador, nomePontuacao)
 
-    Desenha_Tab(dados)
+    Desenha_Tab(dados,idJogador)
 
     return
 
-def Pontuacoes_Disponiveis(dados):
+def Pontuacoes_Disponiveis(dados,idJogadorAtual):
     global button_Ones
     global button_Twos
     global button_Threes
@@ -93,10 +93,10 @@ def Pontuacoes_Disponiveis(dados):
 
     return
 
-def Desenha_Dados(dados):
+def Desenha_Dados(dados,idJogadorAtual):
     Dados.Jogar_Dados()
     dados = Dados.Mostra_Dados()[0]
-    Pontuacoes_Disponiveis(dados)
+    Pontuacoes_Disponiveis(dados,idJogadorAtual)
     listaFaces = Pontuacao.Pega_Faces(dados)
 
     if listaFaces[0] == 1:
@@ -174,16 +174,11 @@ def Desenha_Dados(dados):
 
     return
 
-def Desenha_Tab(dados):
+def Desenha_Tab(dados,idJogadorAtual):
     #pontuacao_atual = Pontuacao.Calcula_Pontuacao(dados,nomePontuacao, idJogadorAtual)[0]
-    jogadores = Jogador.Pega_Jogadores()[0]
-    for i in jogadores:
-        print(i)
-    
-    
+    jogadores = Jogador.Pega_Jogadores()[0]    
 
-
-    button_JogarDados = Button(root, text="Jogar Dados",padx = 60,pady =10, command=lambda: Desenha_Dados(dados))
+    button_JogarDados = Button(root, text="Jogar Dados",padx = 60,pady =10, command=lambda: Desenha_Dados(dados,idJogadorAtual))
 
     jogador1 = jogadores[0][1]
     jogador2 = jogadores[1][2]
@@ -249,11 +244,11 @@ def Desenha_Tab(dados):
     
     return {None}
 
-
+Rodada.Cria_Rodada()
 Tabuleiro.Cria_Tab()
 Dados.Cria_Dados()
-Jogador.Cria_Novo_Jogador("Carlos")
-Jogador.Cria_Novo_Jogador("July")
+Jogador.Cria_Novo_Jogador("Aiko")
+Jogador.Cria_Novo_Jogador("Carol")
 Dados.Jogar_Dados()
 tabuleiro = Tabuleiro.Pega_Tabuleiro()[0]
 for i in tabuleiro:
@@ -264,7 +259,7 @@ for i in dados:
 listaPont=Pontuacao.Tipo_Pontuacao(dados,1)[0]
 for i in listaPont:
     print(i)
-Desenha_Tab(dados)
+Desenha_Tab(dados,1)
 
 root.mainloop()
 

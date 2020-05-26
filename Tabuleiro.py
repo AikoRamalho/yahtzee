@@ -1,4 +1,4 @@
-#Versao 1.1.3
+#Versao 1.1.5
 #Ultima modificacao: Carlos Ribeiro
 
 import Jogador
@@ -73,6 +73,7 @@ def Destruir_Tab():
 #dos jogadores presentes no jogo
 #retorna 5 Caso tipoPontuacao nao corresponda com nenhum tipo
 #de pontuacao
+#retorna 6 Caso a casa ja esteja preenchida
 def InserirPontuacao(pontuacao_atual, idJogadorAtual, tipoPontuacao):
     achado = 0
     achadoJogador = 0
@@ -98,19 +99,25 @@ def InserirPontuacao(pontuacao_atual, idJogadorAtual, tipoPontuacao):
             pontuacao = tabuleiro[linha]
             achado = 1 
             if idJogadorAtual == 1:
-                pontuacao[0] = pontuacao_atual
-                totalLinha = tabuleiro[13]
-                if totalLinha[0] == None:
-                    totalLinha[0] = pontuacao_atual
+                if pontuacao[0] == None:
+                    pontuacao[0] = pontuacao_atual
+                    totalLinha = tabuleiro[13]
+                    if totalLinha[0] == None:
+                        totalLinha[0] = pontuacao_atual
+                    else:
+                        totalLinha[0] = totalLinha[0] + pontuacao_atual
                 else:
-                    totalLinha[0] = totalLinha[0] + pontuacao_atual       
+                    return 6
             elif idJogadorAtual == 2:
-                pontuacao[1] = pontuacao_atual
-                totalLinha = tabuleiro[13]
-                if totalLinha[1] == None:
-                    totalLinha[1] = pontuacao_atual
+                if pontuacao[1] == None:
+                    pontuacao[1] = pontuacao_atual
+                    totalLinha = tabuleiro[13]
+                    if totalLinha[1] == None:
+                        totalLinha[1] = pontuacao_atual
+                    else:
+                        totalLinha[1] = totalLinha[1] + pontuacao_atual
                 else:
-                    totalLinha[1] = totalLinha[1] + pontuacao_atual
+                    return 6
 
     if achado != 1:
         return 5
