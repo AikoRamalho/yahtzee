@@ -4,7 +4,7 @@
 from collections import defaultdict
 import Dados, Tabuleiro
 
-__all__ = ["Calcula_Pontuacao", "Tipo_Pontuacao"]
+__all__ = ["Calcula_Pontuacao", "Tipo_Pontuacao", "Pega_Faces"]
 
 
 

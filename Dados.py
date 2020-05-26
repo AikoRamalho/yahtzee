@@ -70,7 +70,8 @@ def Jogar_Dados():
     if(verifica_dados_estao_todos_congelados()):
         return 2
     while(i < 6):
-        dados[i-1][i]["face"] = random.randint(1,6)
+        if dados[i-1][i]["congelado"] == False: #Carlos aqui, so acrescentei essa linha
+            dados[i-1][i]["face"] = random.randint(1,6)
         i+=1
     return 0
 
