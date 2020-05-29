@@ -44,7 +44,7 @@ def Cria_Tab():
     if len(tabuleiro)>0:
         return 1
     
-    for i in range(0,14):
+    for _ in range(0,14):
         tabuleiro.append([None,None]) #Caso use 0,0 sera necessario fazer uma verificacao futura        
     
     return 0
@@ -74,11 +74,13 @@ def Destruir_Tab():
 #retorna 5 Caso tipoPontuacao nao corresponda com nenhum tipo
 #de pontuacao
 #retorna 6 Caso a casa ja esteja preenchida
-def InserirPontuacao(pontuacao_atual, idJogadorAtual, tipoPontuacao):
+def InserirPontuacao(dados, idJogadorAtual, tipoPontuacao):
+    import Pontuacao
     achado = 0
     achadoJogador = 0
     listaA = Jogador.Pega_Jogadores()
     listaJogadores = listaA[0]
+    pontuacao_atual = Pontuacao.Calcula_Pontuacao(dados, tipoPontuacao, idJogadorAtual)[0]
 
     if type(pontuacao_atual) != int:
         return 1

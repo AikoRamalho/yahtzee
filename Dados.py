@@ -71,7 +71,13 @@ def Jogar_Dados():
         return 2
     while(i < 6):
         if dados[i-1][i]["congelado"] == False: #Carlos aqui, so acrescentei essa linha
-            dados[i-1][i]["face"] = random.randint(1,6)
+            if(i == 1): #REMOVER DEPOIS ----------- IMPORTANTISSIMO -----------------
+                dados[i-1][i]["face"] = 1
+            else:
+                if(i == 2):
+                    dados[i-1][i]["face"] = 2
+                else:
+                    dados[i-1][i]["face"] = random.randint(1,6)
         i+=1
     return 0
 

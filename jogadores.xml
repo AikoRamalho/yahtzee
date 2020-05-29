@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<jogadores>
+  <!--Dados dos jogadores e suas pontuacoes-->
+  <jogador>
+    <id>1</id>
+    <nome>Aiko</nome>
+  </jogador>
+</jogadores>

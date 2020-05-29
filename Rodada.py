@@ -2,6 +2,15 @@
 #Ultimo modificacao: Aiko Ramalho
 import Dados
 
+'''
+Módulo que contém uma lista ordenada por ordem de criação de objetos rodada. 
+O objeto rodada é um dicionário com chave ID e valor como um novo dicionário, 
+com chave tentativas e valor número restante de tentativas, e chave dados_rodada, 
+com o valor sendo uma lista de 5 objetos Dado. 
+Exemplo: {01: { “tentivas”: 2 }}
+'''
+
+
 MAX_RODADAS = 26 #define o numero maximo de rodadas (numero padrao de um jogo yahtzee)
 
 __all__ = ["Cria_Rodada", "Verifica_Tentativa", "Atualiza_Tentativas", "Modifica_Dados_Rodada", "Deleta_Rodadas", "Pega_Rodada"]
@@ -15,15 +24,12 @@ rodadas = []
 #retorna 2 caso os dados da rodada anterior n tenham sido deletados
 def Cria_Rodada():
     numero_rodada = len(rodadas)
-    retorno_mostra_dados = Dados.Mostra_Dados()
     if(numero_rodada > MAX_RODADAS):
         return 1
-    if(list(retorno_mostra_dados.values())[0] == []):
-        nova_rodada = {numero_rodada+1: {"tentativas": 3, "dados_rodada": []}}
-        rodadas.append(nova_rodada)
-        return 0
-    return 2
-
+    nova_rodada = {numero_rodada+1: { "tentativas": 3 }}
+    rodadas.append(nova_rodada)
+    return 0
+    
 #funcao responsavel por verificar se ainda restam tentativas na ultima rodada criada
 #retorna 0 caso tenham tentativas
 #retorna 1 caso nao tenham tentativas
