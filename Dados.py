@@ -70,11 +70,11 @@ def Jogar_Dados():
     if(verifica_dados_estao_todos_congelados()):
         return 2
     while(i < 6):
-        if dados[i-1][i]["congelado"] == False: #Carlos aqui, so acrescentei essa linha
-            if(i == 1): #REMOVER DEPOIS ----------- IMPORTANTISSIMO -----------------
+        if dados[i-1][i]["congelado"] == False:
+            if(i == 1): #somente para entra da t3
                 dados[i-1][i]["face"] = 1
             else:
-                if(i == 2):
+                if(i == 2): #somente para entra da t3
                     dados[i-1][i]["face"] = 2
                 else:
                     dados[i-1][i]["face"] = random.randint(1,6)

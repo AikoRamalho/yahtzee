@@ -1,8 +1,8 @@
-#Versao 1.0.3
+import mysql.connector
+#Versao 1.2.3
 #Ultima modificacao: Aiko Ramalho
 __all__ = ["Cria_Novo_Jogador", "Pega_Jogadores", "Destroi_Jogadores"]
 
-jogadores = []
 #Modulo que diz respeito aos jogadores do Yahtzee.Nele cadastramos e pegamos
 #o nome dos jogadores.
 #Dentro deste modulo existe uma lista de objetos jogadores.
@@ -10,20 +10,33 @@ jogadores = []
 #com ID(int) e Nome(string),
 #exemplo: {01: Aiko}, {02: Carol}, {03: Carlos}.
 
+cnx = mysql.connector.connect(user='root', password='root', database='modular')
+cursor = cnx.cursor()
 
 #Recebe o nome do jogador por parâmetro e cadastra na lista de jogadores.
-#Paramêtros: nomeJogador
+#Paramêtros: nomeJogador, id (opcional para caso de carregar partida por xml)
 #retorna 0 caso o jogador tenha sido criado corretamente
 #retorna 1 caso ja existam 2 jogadores(limite maximo)
 #retorna 2 caso o nome nao tenha sido passado corretamente
-def Cria_Novo_Jogador(nomeJogador):
-    qtdJogadores = len(jogadores)
+def Cria_Novo_Jogador(nomeJogador, id_):
+    qtdJogadores = 2 - list(Pega_Jogadores().keys())[0]
     if(qtdJogadores == 2):
         return 1
     if(len(nomeJogador) == 0):
         return 2
-    novoJogador = {qtdJogadores+1: nomeJogador}
-    jogadores.append(novoJogador)
+    if(id_ == None):
+        add_jogador = ("INSERT INTO Jogadores "
+                    "(nome) "
+                    "VALUES (%s)")
+        data_jogador = (nomeJogador,)
+        cursor.execute(add_jogador, data_jogador)
+    else:
+        add_jogador = ("INSERT INTO Jogadores "
+                    "(jogadorId, nome) "
+                    "VALUES (%s, %s)")
+        data_jogador = (id_, nomeJogador)
+        cursor.execute(add_jogador, data_jogador)
+    cnx.commit()
     return 0
 
 
@@ -33,8 +46,12 @@ def Cria_Novo_Jogador(nomeJogador):
 #Retorna {1: []} caso falte um jogador a ser cadastrado
 #retorna {2: []} caso faltem dois jogadores para serem cadastrados
 def Pega_Jogadores():
-    qtdJogadores = len(jogadores)
+    query = ("SELECT * FROM Jogadores ")
+    cursor.execute(query)
+    lista = cursor.fetchall()
+    qtdJogadores = len(lista)
     if(qtdJogadores == 2):
+        jogadores = [{lista[0][0]: lista[0][1]}, {lista[1][0]: lista[1][1]}]
         return {0: jogadores}
     elif(qtdJogadores == 1):
         return {1: []}
@@ -45,8 +62,10 @@ def Pega_Jogadores():
 #retorna 0 caso sucesso
 #retorna 1 caso a lista ja esteja vazia
 def Destroi_Jogadores():
-    qtdJogadores = len(jogadores)
+    qtdJogadores = 2 - list(Pega_Jogadores().keys())[0]
     if(qtdJogadores == 0):
         return 1
-    jogadores.clear()
+    sql = ("DELETE FROM Jogadores")
+    cursor.execute(sql)
+    cnx.commit()
     return 0

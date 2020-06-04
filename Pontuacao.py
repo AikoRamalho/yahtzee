@@ -2,7 +2,7 @@
 #Ultima modificacao: Carlos Ribeiro
 
 from collections import defaultdict
-import Dados, Tabuleiro
+import Dados, Tabuleiro, Jogador
 
 __all__ = ["Calcula_Pontuacao", "Tipo_Pontuacao", "Pega_Faces"]
 
@@ -17,27 +17,22 @@ __all__ = ["Calcula_Pontuacao", "Tipo_Pontuacao", "Pega_Faces"]
 #retorna {1: None} Caso nomePontuacao nao seja string
 #retorna {2: None} Caso o nomePontuacao nao esteja presente
 #na lista de pontuacoes possiveis
-#retorna {3:None} Caso o dado nao seja objeto dado
+#retorna {3:None} Caso o dado nao seja uma lista de tamanho 5
 #retorna {4:None} Caso o idjogador nao seja int
-#retorna {5:None} Caso o id jogador nao faca parte de jogadores
 
 def Calcula_Pontuacao(dados, nomePontuacao, idJogadorAtual):
-    retorno_mostra_dados=Dados.Mostra_Dados()
+    if ((type(dados) != type([])) or (len(dados) != 5)):
+        return {3:None}
+    if type(idJogadorAtual) != type(0):
+        return {4: None}
+    jog1, jog2 = Jogador.Pega_Jogadores()[0]
+    id_jog1 = list(jog1.keys())[0]
+    id_jog2 = list(jog2.keys())[0]
+    if(idJogadorAtual != id_jog1 and idJogadorAtual != id_jog2):
+        return {5: None}
+    pont = 0 #pontuacao a ser calculada
     faces = Pega_Faces(dados)
     listaPont = Tipo_Pontuacao(dados,idJogadorAtual)[0]
-    pont = 0 #pontuacao a ser calculada
-    
-    if(type(dados)==list):
-        if dados[0]!= retorno_mostra_dados[0][0]:
-            return {3:None}
-    else:
-        if type(dados)!= type(retorno_mostra_dados):
-            return {3:None}
-    if type(idJogadorAtual) != int:
-        return {4: None}
-    
-    if idJogadorAtual != 1 and idJogadorAtual != 2:
-        return {5: None}
     
     if nomePontuacao == "Ones":
         if "Ones" in listaPont:
@@ -129,8 +124,6 @@ def Calcula_Pontuacao(dados, nomePontuacao, idJogadorAtual):
 #possiveis
 #retorna {1: []} - Caso o Dado nao seja um objeto Dado.
 #retorna {2: []} - Caso idJogadorAtual nao seja um int.
-#retorna {3: []} - Caso o parametro idJogadorAtual nao corresponda
-#com nenhum dos jogadores presentes no jogo
 def Tipo_Pontuacao(dados, idJogadorAtual):
     k=0
     pont = ""
@@ -150,8 +143,6 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
     else:
         if type(dados)!= type(retorno_mostra_dados):
             return {1:[]}
-    if idJogadorAtual != 1 and idJogadorAtual != 2:
-        return {3: []}
     
     for i in dados:
         achado = 0
@@ -370,11 +361,15 @@ def Tipo_Pontuacao(dados, idJogadorAtual):
 def Verifica_Pont_Preenchida(tipoPontuacao,idJogadorAtual):
     pontuacao_AUX = Tabuleiro.Pega_PontuacaoAux()
     tabuleiro = Tabuleiro.Pega_Tabuleiro()[0]
+    if(idJogadorAtual == list(Jogador.Pega_Jogadores()[0][0].keys())[0]):
+        aux = 0
+    else:
+        aux = 1
     for i in pontuacao_AUX:
         if tipoPontuacao == i:
             linha = pontuacao_AUX[i]
             pontuacao = tabuleiro[linha]
-            if pontuacao[idJogadorAtual-1] != None:
+            if pontuacao[aux] != None:
                 return 1 #Pontuacao Preenchida
         
     return 0

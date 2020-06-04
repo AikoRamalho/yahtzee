@@ -1,8 +1,45 @@
 <?xml version="1.0" ?>
 <jogadores>
   <!--Dados dos jogadores e suas pontuacoes-->
+  <jogador_atual_id>2</jogador_atual_id>
   <jogador>
     <id>1</id>
     <nome>Aiko</nome>
+    <pontuacao>
+      <Ones>1</Ones>
+      <Twos>None</Twos>
+      <Threes>None</Threes>
+      <Fours>None</Fours>
+      <Fives>None</Fives>
+      <Sixes>None</Sixes>
+      <Three_Of_A_Kind>None</Three_Of_A_Kind>
+      <Four_Of_A_Kind>None</Four_Of_A_Kind>
+      <Full_House>None</Full_House>
+      <Small_Straight>None</Small_Straight>
+      <Large_Straight>None</Large_Straight>
+      <Chance>None</Chance>
+      <Yahtzee>None</Yahtzee>
+      <Total_Score>1</Total_Score>
+    </pontuacao>
+  </jogador>
+  <jogador>
+    <id>2</id>
+    <nome>Ana</nome>
+    <pontuacao>
+      <Ones>None</Ones>
+      <Twos>2</Twos>
+      <Threes>None</Threes>
+      <Fours>None</Fours>
+      <Fives>None</Fives>
+      <Sixes>None</Sixes>
+      <Three_Of_A_Kind>None</Three_Of_A_Kind>
+      <Four_Of_A_Kind>None</Four_Of_A_Kind>
+      <Full_House>None</Full_House>
+      <Small_Straight>None</Small_Straight>
+      <Large_Straight>None</Large_Straight>
+      <Chance>None</Chance>
+      <Yahtzee>None</Yahtzee>
+      <Total_Score>2</Total_Score>
+    </pontuacao>
   </jogador>
 </jogadores>

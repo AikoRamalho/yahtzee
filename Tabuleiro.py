@@ -74,13 +74,17 @@ def Destruir_Tab():
 #retorna 5 Caso tipoPontuacao nao corresponda com nenhum tipo
 #de pontuacao
 #retorna 6 Caso a casa ja esteja preenchida
-def InserirPontuacao(dados, idJogadorAtual, tipoPontuacao):
+def InserirPontuacao(dados, idJogadorAtual, tipoPontuacao, pontuacao):
     import Pontuacao
+    id_primeiro_jogador = list(Jogador.Pega_Jogadores()[0][0].keys())[0]
     achado = 0
     achadoJogador = 0
     listaA = Jogador.Pega_Jogadores()
     listaJogadores = listaA[0]
-    pontuacao_atual = Pontuacao.Calcula_Pontuacao(dados, tipoPontuacao, idJogadorAtual)[0]
+    if(pontuacao != None):
+        pontuacao_atual = pontuacao
+    else:
+        pontuacao_atual = Pontuacao.Calcula_Pontuacao(dados, tipoPontuacao, idJogadorAtual)[0]
 
     if type(pontuacao_atual) != int:
         return 1
@@ -100,7 +104,7 @@ def InserirPontuacao(dados, idJogadorAtual, tipoPontuacao):
             linha = pontuacaoAux[i]
             pontuacao = tabuleiro[linha]
             achado = 1 
-            if idJogadorAtual == 1:
+            if idJogadorAtual == id_primeiro_jogador:
                 if pontuacao[0] == None:
                     pontuacao[0] = pontuacao_atual
                     totalLinha = tabuleiro[13]
@@ -110,7 +114,7 @@ def InserirPontuacao(dados, idJogadorAtual, tipoPontuacao):
                         totalLinha[0] = totalLinha[0] + pontuacao_atual
                 else:
                     return 6
-            elif idJogadorAtual == 2:
+            else:
                 if pontuacao[1] == None:
                     pontuacao[1] = pontuacao_atual
                     totalLinha = tabuleiro[13]
