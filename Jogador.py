@@ -29,13 +29,12 @@ def Cria_Novo_Jogador(nomeJogador, id_):
                     "(nome) "
                     "VALUES (%s)")
         data_jogador = (nomeJogador,)
-        cursor.execute(add_jogador, data_jogador)
     else:
         add_jogador = ("INSERT INTO Jogadores "
                     "(jogadorId, nome) "
                     "VALUES (%s, %s)")
         data_jogador = (id_, nomeJogador)
-        cursor.execute(add_jogador, data_jogador)
+    cursor.execute(add_jogador, data_jogador)
     cnx.commit()
     return 0
 

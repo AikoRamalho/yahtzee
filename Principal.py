@@ -1,3 +1,5 @@
+#Autor: Aiko Ramalho
+#Versão: 1.9.0
 from Jogador import Cria_Novo_Jogador, Destroi_Jogadores, Pega_Jogadores
 from bd_config import cria_ambiente, reset_database
 from Dados import Cria_Dados, Muda_Status, Mostra_Dados, Destroi_Dados, Jogar_Dados, Muda_Face
@@ -8,7 +10,6 @@ from Tabuleiro import Cria_Tab, Destruir_Tab, InserirPontuacao, Verifica_Vencedo
 from xml.etree import ElementTree
 from xml.etree.ElementTree import Element, SubElement, Comment
 from xml.dom import minidom
-
 
 listaAuxiliarPontuacoes = ['Ones', 'Twos', 'Threes', 'Fours', 'Fives', 'Sixes', 'Three_Of_A_Kind',
 'Four_Of_A_Kind', 'Full_House', "Small_Straight", "Large_Straight", "Chance", "Yahtzee", "Total_Score"]
@@ -121,7 +122,6 @@ Atualiza_Tentativas(2)
 dados = Mostra_Dados()[0]
 InserirPontuacao(dados, id_jog2, 'Twos', None)
 #pego o id do jogador atual
-print("VAI TOMAR NO CU ", Pega_Jogo())
 jogadorAtual = list(Pega_Jogo().values())[0]["jogador_atual"]
 
 #pego as pontuacoes dos jogadores p/ salvar no arquivo

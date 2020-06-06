@@ -1,8 +1,13 @@
-Para rodar as entregas da t2:
+Para rodar as entregas da t3:
 
-Primeiro, tenha certeza que seu computador tem instalado python 3.8.
+Basta digitar "py -3 principal.py" na raiz do projeto na linha de comando.
 
-Em segundo lugar, basta rodar o comando "py -3 teste.py" para rodar o arquivo do teste.
+O arquivo principal.py cria três tabelas, Jogo, Jogador e Rodada, implementando todas as listas encapsuladas no BD como pedido.
+O módulo Dados não foi passado para persistência em banco de dados como Orientado.
+O arquivo principal.py é inteligente. Se você não tiver um namespace de database chamado modular, ele o cria, se você não tiver as tabelas, ele as cria também,
+por essa razão não achei necessário incluir a criação desse ambiente no TDD.
 
-Os arquivos Dados.py, Jogador.py, e Rodada.py que foram os três módulos definidos para esta entrega constam
-na raiz do projeto em ./yahtzee/
+O arquivo principal.py também implementa um fluxo de jogo fictício, onde o primeiro jogador roda o dado e pontua no ones, e o segundo pontua nos twos.
+Com essa pontuação feita, ele salva o status da partida no arquivo jogadores.xml.
+
+Depois de salvar o status da partida, ele deleta todo o ambiente, e aí recupera os dados pelo arquivo.
